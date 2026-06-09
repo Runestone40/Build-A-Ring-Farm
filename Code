@@ -1028,7 +1028,7 @@ local function scoreDirt(dirtPart)
 	for key, entry in pairs(harvestedData) do
 		if entry.name == plantName and entry.floor == floorKey then
 			local mutRank = MUTATION_RANK[entry.mutation] or 0
-			local s = baseIncome * entry.mult * (1 + mutRank * 0.15) * (1 + (entry.level - 50) * 0.01)
+			local s = baseIncome * entry.mult * (1 + mutRank * 0.15) * (1 + ((tonumber(entry.level) or 1) - 50) * 0.01)
 			if s > bestScore then bestScore = s end
 		end
 	end
