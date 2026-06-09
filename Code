@@ -426,7 +426,7 @@ local function addRow(label, hasConfig, configLabel)
 		cfgBtn.Size=UDim2.new(0,44,0,20)
 		cfgBtn.Position=UDim2.new(1,-100,0.5,-10)
 		mkCorner(cfgBtn,5)
-	--	mkStroke(cfgBtn,C.border,1,0.5)
+		--	mkStroke(cfgBtn,C.border,1,0.5)
 	end
 
 	return track,setToggle,getToggle,cfgBtn
@@ -744,12 +744,7 @@ gearTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
 	autoGearEnabled=not getGear();setGear(autoGearEnabled);setStatus();saveSettings()
 end)
-fertTrack.InputBegan:Connect(function(i)
-	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoFertEnabled=not getFert();setFert(autoFertEnabled);setStatus()
-	if autoFertEnabled then task.spawn(function() runAutoFert() end) end
-	saveSettings()
-end)
+
 sellTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
 	autoSellEnabled=not getSell();setSell(autoSellEnabled);setStatus();saveSettings()
@@ -1045,12 +1040,18 @@ end
 local function getPlantedDirts()
 	local ok, plotName = pcall(function()
 		local plotRemote = Remotes:FindFirstChild("Plot")
-		if not plotRemote then return nil end
+		if not plotRemote then print("Plot remote NOT FOUND") return nil end
 		local getPlot = plotRemote:FindFirstChild("GetPlot")
-		if not getPlot then return nil end
+		if not getPlot then
+			print("GetPlot NOT FOUND, Plot children:")
+			for _, v in ipairs(plotRemote:GetChildren()) do print(" ->", v.Name) end
+			return nil
+		end
 		return getPlot:InvokeServer()
 	end)
 	if not ok or not plotName then return {} end
+
+	-- rest of function unchanged...
 
 	local plotModel = workspace:FindFirstChild("Map")
 		and workspace.Map:FindFirstChild("Plots")
@@ -1141,6 +1142,17 @@ task.spawn(function()
 		if autoFertEnabled then runAutoFert() end
 	end
 end)
+
+-- (runAutoFert function ends here)
+
+fertTrack.InputBegan:Connect(function(i)
+	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
+	autoFertEnabled=not getFert();setFert(autoFertEnabled);setStatus()
+	if autoFertEnabled then task.spawn(function() runAutoFert() end) end
+	saveSettings()
+end)
+
+-- ─── Auto Fert Loop ──────────────────────────────────────────────────────────
 
 -- ─── Auto Roll Loop ──────────────────────────────────────────────────────────
 
