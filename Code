@@ -965,7 +965,13 @@ local function loadGCPlantData()
 				if not floorMultipliers[fk] then floorMultipliers[fk] = obj.EarningsMultiplier end
 				local key = obj.Name.."|"..fk.."|"..obj.Mutation
 				if not harvestedData[key] then
-					harvestedData[key] = {mult=obj.EarningsMultiplier, level=obj.Level, mutation=obj.Mutation, name=obj.Name, floor=fk}
+					harvestedData[key] = {
+						mult     = obj.EarningsMultiplier,
+						level    = tonumber(obj.Level) or 1,
+						mutation = obj.Mutation,
+						name     = obj.Name,
+						floor    = fk
+					}
 				end
 			end
 			if type(obj.PlantName)=="string" and type(obj.PlantLevel)=="number" and
@@ -1038,7 +1044,11 @@ end
 
 local function getPlantedDirts()
 	local ok, plotName = pcall(function()
-		return Remotes.Plot.GetPlot:InvokeServer()
+		local plotRemote = Remotes:FindFirstChild("Plot")
+		if not plotRemote then return nil end
+		local getPlot = plotRemote:FindFirstChild("GetPlot")
+		if not getPlot then return nil end
+		return getPlot:InvokeServer()
 	end)
 	if not ok or not plotName then return {} end
 
