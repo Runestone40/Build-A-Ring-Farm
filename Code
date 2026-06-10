@@ -45,6 +45,14 @@ local function fmt(n)
 	return "$".. (n>=100 and string.format("%.0f",n) or n>=10 and string.format("%.1f",n) or string.format("%.2f",n)) .. s[i]
 end
 
+local function parseCash(v)
+	v = tostring(v):gsub("%$", "")
+	local suffixes = {K=1e3, M=1e6, B=1e9, T=1e12, Q=1e15}
+	local num, suffix = v:match("^([%d%.]+)(%a?)$")
+	if not num then return 0 end
+	return tonumber(num) * (suffixes[suffix] or 1)
+end
+
 local Seeds = {
 	-- COMMON
 	{name="Carrot",             rarity="Common",      cost=100,              income=3,       chance="Common"},
@@ -181,6 +189,17 @@ local GearItems = {
 	{name="Normal Fertilizer",    cost=500000,           maxStock=3},
 }
 
+-- ─── Egg Data ─────────────────────────────────────────────────────────────────
+
+local EggItems = {
+	{name="Common Egg",   cost=25000000},
+	{name="Rare Egg",     cost=25000000000},
+	{name="Epic Egg",     cost=10000000000000},
+}
+
+local EggByName = {}
+for _,e in ipairs(EggItems) do EggByName[e.name]=e end
+
 -- ─── Settings persistence ────────────────────────────────────────────────────
 
 local SETTINGS_FILE = "buildaringfarm_settings.json"
@@ -193,11 +212,13 @@ local autoBuyEnabled   = false
 local autoGearEnabled  = false
 local autoFertEnabled  = false
 local autoSellEnabled  = false
+local autoEggEnabled  = false
 local isBuying  = false
 local buyLock   = false
 local autoBuyList = {}
 local gearBuyList = {}
 local gearStock   = {}
+local autoEggList     = {}
 
 local function saveSettings()
 	local data = {
@@ -206,11 +227,14 @@ local function saveSettings()
 		autoGear  = autoGearEnabled,
 		autoFert  = autoFertEnabled,
 		autoSell  = autoSellEnabled,
+		autoEgg   = autoEggEnabled,   -- add this
 		buyList   = {},
 		gearList  = {},
+		eggList   = {},               -- add this
 	}
 	for name in pairs(autoBuyList) do table.insert(data.buyList, name) end
 	for name in pairs(gearBuyList) do table.insert(data.gearList, name) end
+	for name in pairs(autoEggList) do table.insert(data.eggList, name) end  -- add this
 	pcall(writefile, SETTINGS_FILE, HttpService:JSONEncode(data))
 end
 
@@ -225,7 +249,11 @@ local function loadSettings()
 	if data.autoGear then autoGearEnabled = true end
 	if data.autoFert then autoFertEnabled = true end
 	if data.autoSell then autoSellEnabled = true end
+	if data.autoEgg then autoEggEnabled = true end
 
+	if type(data.eggList) == "table" then
+		for _, name in ipairs(data.eggList) do autoEggList[name] = true end
+	end
 	if type(data.buyList) == "table" then
 		for _, name in ipairs(data.buyList) do autoBuyList[name] = true end
 	end
@@ -438,6 +466,7 @@ local buyTrack,setBuy,getBuy,buyCfgBtn      = addRow("Auto Buy","Seeds","Seeds")
 local gearTrack,setGear,getGear,gearCfgBtn = addRow("Auto Gear",true,"Items")
 local fertTrack,setFert,getFert             = addRow("Auto Fert")
 local sellTrack,setSell,getSell             = addRow("Auto Sell")
+local eggTrack,setEgg,getEgg,eggCfgBtn = addRow("Auto Eggs",true,"Eggs")
 
 -- ─── Status + Footer ─────────────────────────────────────────────────────────
 
@@ -478,6 +507,7 @@ local function setStatus()
 	if autoGearEnabled then table.insert(parts, "Gear")    end
 	if autoFertEnabled then table.insert(parts, "Fert")    end
 	if autoSellEnabled then table.insert(parts, "Selling") end
+	if autoEggEnabled then table.insert(parts, "Eggs") end
 
 	if #parts == 0 then
 		statusLbl.Text = "Idle"
@@ -720,6 +750,68 @@ end
 gearClose2.MouseButton1Click:Connect(closeGear)
 gearCfgBtn.MouseButton1Click:Connect(function() if gearPanelOpen then closeGear() else openGear() end end)
 
+-- ─── Egg Panel ────────────────────────────────────────────────────────────────
+
+local eggPanel,eggScroll,eggLayout,eggClose,eggAll,eggNone,eggPos = makePanel("Eggs",220,0)
+local eggPanelOpen=false
+local eggToggles={}
+
+local ei=0
+for _,item in ipairs(EggItems) do
+	ei+=1
+	local row=Instance.new("Frame",eggScroll)
+	row.Size=UDim2.new(1,0,0,50);row.BackgroundColor3=C.surface
+	row.BorderSizePixel=0;row.LayoutOrder=ei;mkCorner(row,7)
+
+	local nL=mkLabel(row,item.name,C.white,12,Enum.Font.GothamBold)
+	nL.Size=UDim2.new(1,-50,0,22);nL.Position=UDim2.new(0,10,0,5)
+
+	local infoL=mkLabel(row,"Cost "..fmt(item.cost),C.muted,9,Enum.Font.Gotham)
+	infoL.Size=UDim2.new(1,-50,0,14);infoL.Position=UDim2.new(0,10,0,27)
+
+	local ttrack,setT,getT=mkToggle(row)
+	ttrack.Size=UDim2.new(0,36,0,18);ttrack.Position=UDim2.new(1,-42,0.5,-9)
+
+	ttrack.InputBegan:Connect(function(i)
+		if i.UserInputType==Enum.UserInputType.MouseButton1 then
+			local s=not getT();setT(s);autoEggList[item.name]=s or nil;saveSettings()
+		end
+	end)
+	eggToggles[item.name]={set=setT,get=getT}
+end
+
+eggLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	local h=math.min(eggLayout.AbsoluteContentSize.Y+80,300)
+	eggPanel.Size=UDim2.new(0,220,0,h)
+	eggScroll.CanvasSize=UDim2.new(0,0,0,eggLayout.AbsoluteContentSize.Y+8)
+end)
+
+eggAll.MouseButton1Click:Connect(function()
+	for _,item in ipairs(EggItems) do autoEggList[item.name]=true;if eggToggles[item.name] then eggToggles[item.name].set(true) end end
+	saveSettings()
+end)
+eggNone.MouseButton1Click:Connect(function()
+	table.clear(autoEggList)
+	for _,item in ipairs(EggItems) do if eggToggles[item.name] then eggToggles[item.name].set(false) end end
+	saveSettings()
+end)
+
+local function openEgg()
+	eggPanelOpen=true
+	eggPanel.Position=UDim2.new(
+		win.Position.X.Scale, win.Position.X.Offset+win.AbsoluteSize.X+8,
+		win.Position.Y.Scale, win.Position.Y.Offset+100
+	)
+	eggPanel.Visible=true
+	eggCfgBtn.BackgroundColor3=C.accent;eggCfgBtn.TextColor3=C.white
+end
+local function closeEgg()
+	eggPanelOpen=false;eggPanel.Visible=false
+	eggCfgBtn.BackgroundColor3=C.surface;eggCfgBtn.TextColor3=C.sub
+end
+eggClose.MouseButton1Click:Connect(closeEgg)
+eggCfgBtn.MouseButton1Click:Connect(function() if eggPanelOpen then closeEgg() else openEgg() end end)
+
 -- ─── Apply Loaded Settings to UI ─────────────────────────────────────────────
 
 if autoRollEnabled then setRoll(true) end
@@ -727,6 +819,9 @@ if autoBuyEnabled  then setBuy(true)  end
 if autoGearEnabled then setGear(true) end
 if autoFertEnabled then setFert(true) end
 if autoSellEnabled then setSell(true) end
+if autoEggEnabled then setEgg(true) end
+
+for name in pairs(autoEggList) do if eggToggles[name] then eggToggles[name].set(true) end end
 for name in pairs(autoBuyList) do if seedToggles[name] then seedToggles[name].set(true) end end
 for name in pairs(gearBuyList) do if gearToggles[name] then gearToggles[name].set(true) end end
 setStatus()
@@ -736,6 +831,10 @@ setStatus()
 rollTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
 	autoRollEnabled=not getRoll();setRoll(autoRollEnabled);setStatus();saveSettings()
+end)
+eggTrack.InputBegan:Connect(function(i)
+	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
+	autoEggEnabled=not getEgg();setEgg(autoEggEnabled);setStatus();saveSettings()
 end)
 buyTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
@@ -891,14 +990,15 @@ RollSeeds.OnClientEvent:Connect(function(rolledSeeds)
 
 	local queue={}
 	local cash = player:WaitForChild("leaderstats"):FindFirstChild("Cash")
-	local balance = cash and cash.Value or 0
+	local balance = parseCash(cash and cash.Value or 0)
 
-	for slotIndex,seedName in ipairs(rolledSeeds) do
-		if type(seedName)=="string" and autoBuyList[seedName] then
+	for slotIndex, seedName in ipairs(rolledSeeds) do
+		if type(seedName) == "string" and autoBuyList[seedName] then
 			local seed = SeedByName[seedName]
-			if seed and seed.cost and balance >= seed.cost then
-				table.insert(queue,{slot=slotIndex,name=seedName})
-				balance -= seed.cost
+			local cost = seed and tonumber(seed.cost)
+			if cost and balance >= cost then
+				table.insert(queue, {slot=slotIndex, name=seedName})
+				balance -= cost
 			end
 		end
 	end
@@ -928,6 +1028,57 @@ task.spawn(function()
 			if not gearBuyList[item.name] then continue end
 			if (gearStock[item.name] or 0) > 0 then
 				buyGearItem(item)
+			end
+		end
+	end
+end)
+
+local function buyEgg(eggName)
+	local petMerchant = workspace:FindFirstChild("PetMerchant")
+	if not petMerchant then return false end
+
+	for i = 1, 5 do
+		local lever = petMerchant:FindFirstChild("Podium"..i.."Lever")
+		if not lever then continue end
+		local prompt = lever:FindFirstChild("PromptAttachment")
+			and lever.PromptAttachment:FindFirstChild("EggShopPrompt")
+		if not prompt then continue end
+		if not prompt.ObjectText:find(eggName) then continue end
+		if prompt.ActionText ~= "Buy Egg" then continue end
+
+		local char = player.Character
+		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		if not hrp then return false end
+		local origPos = hrp.CFrame
+
+		local leverPart = lever:FindFirstChildWhichIsA("BasePart", true)
+		if not leverPart then return false end
+
+		hrp.CFrame = leverPart.CFrame * CFrame.new(0, 0, 3)
+		task.wait(0.3)
+		fireproximityprompt(prompt)
+		task.wait(0.2)
+		hrp.CFrame = origPos
+
+		return true
+	end
+	return false
+end
+
+-- ─── Auto Egg Loop ────────────────────────────────────────────────────────────
+
+task.spawn(function()
+	while true do
+		task.wait(2)
+		if not autoEggEnabled then continue end
+		local cash = player:WaitForChild("leaderstats"):FindFirstChild("Cash")
+		local balance = parseCash(cash and cash.Value or 0)
+		for _, item in ipairs(EggItems) do
+			if not autoEggList[item.name] then continue end
+			if balance >= item.cost then
+				buyEgg(item.name)
+				balance -= item.cost
+				task.wait(0.5)
 			end
 		end
 	end
@@ -963,7 +1114,7 @@ local function loadGCPlantData()
 				if not harvestedData[key] then
 					harvestedData[key] = {
 						mult     = obj.EarningsMultiplier,
-						level    = tonumber(obj.Level) or 1,
+						level    = tonumber(obj.Level) or 1,   -- already doing tonumber here
 						mutation = obj.Mutation,
 						name     = obj.Name,
 						floor    = fk
@@ -1021,7 +1172,7 @@ local function scoreDirt(dirtPart)
 	if not plantName or plantCount == 0 then return nil end
 
 	local seed = SeedByName[plantName]
-	local baseIncome = seed and seed.income or 1
+	local baseIncome = (seed and seed.income) or 1
 	local floorKey = getFloorKey(dirtPart:GetFullName())
 	local floorMult = floorMultipliers[floorKey] or 1
 
@@ -1029,7 +1180,9 @@ local function scoreDirt(dirtPart)
 	for key, entry in pairs(harvestedData) do
 		if entry.name == plantName and entry.floor == floorKey then
 			local mutRank = MUTATION_RANK[entry.mutation] or 0
-			local s = baseIncome * entry.mult * (1 + mutRank * 0.15) * (1 + ((tonumber(entry.level) or 1) - 50) * 0.01)
+			local level = tonumber(entry.level) or 1
+			local mult = tonumber(entry.mult) or 1
+			local s = baseIncome * mult * (1 + mutRank * 0.15) * (1 + (level - 50) * 0.01)
 			if s > bestScore then bestScore = s end
 		end
 	end
@@ -1141,6 +1294,17 @@ task.spawn(function()
 	while true do
 		task.wait(300)
 		if autoFertEnabled then runAutoFert() end
+	end
+end)
+
+-- ─── Fert Inventory Watcher ──────────────────────────────────────────────────
+
+player:WaitForChild("Backpack").ChildAdded:Connect(function(child)
+	if not autoFertEnabled then return end
+	local key = child:GetAttribute("gearKey")
+	if key and key:lower():find("fertilizer") then
+		task.wait(0.5)
+		task.spawn(runAutoFert)
 	end
 end)
 
