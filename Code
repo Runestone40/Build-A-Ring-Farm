@@ -925,19 +925,28 @@ task.spawn(watchGearShop)
 local toastFrame = Instance.new("Frame", gui)
 toastFrame.Size = UDim2.new(0, 320, 0, 60)
 toastFrame.Position = UDim2.new(0.5, -160, 0.42, 0)
-toastFrame.BackgroundColor3 = C.bg
+toastFrame.BackgroundColor3 = Color3.fromRGB(45, 48, 55)
 toastFrame.BackgroundTransparency = 1
 toastFrame.BorderSizePixel = 0
 toastFrame.Visible = false
-mkCorner(toastFrame, 10)
-mkStroke(toastFrame, C.border, 1.2, 0)
+
+mkCorner(toastFrame, 6)
+mkStroke(toastFrame, Color3.fromRGB(85, 90, 100), 2, 0)
+
+local gradient = Instance.new("UIGradient")
+gradient.Color = ColorSequence.new{
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(58, 62, 70)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(42, 45, 52))
+}
+gradient.Rotation = 90
+gradient.Parent = toastFrame
 
 local toastSeedName = Instance.new("TextLabel", toastFrame)
 toastSeedName.Size = UDim2.new(1, -20, 0, 28)
 toastSeedName.Position = UDim2.new(0, 10, 0, 8)
 toastSeedName.BackgroundTransparency = 1
-toastSeedName.Font = Enum.Font.GothamBold
-toastSeedName.TextSize = 20
+toastSeedName.Font = Enum.Font.GothamBlack
+toastSeedName.TextSize = 22
 toastSeedName.TextXAlignment = Enum.TextXAlignment.Center
 toastSeedName.TextTransparency = 1
 
@@ -945,10 +954,10 @@ local toastSub = Instance.new("TextLabel", toastFrame)
 toastSub.Size = UDim2.new(1, -20, 0, 16)
 toastSub.Position = UDim2.new(0, 10, 0, 36)
 toastSub.BackgroundTransparency = 1
-toastSub.Text = "Seed Purchased"
-toastSub.TextColor3 = C.sub
-toastSub.Font = Enum.Font.Gotham
-toastSub.TextSize = 12
+toastSub.Text = "SEED PURCHASED"
+toastSub.TextColor3 = Color3.fromRGB(190, 190, 190)
+toastSub.Font = Enum.Font.GothamMedium
+toastSub.TextSize = 13
 toastSub.TextXAlignment = Enum.TextXAlignment.Center
 toastSub.TextTransparency = 1
 
@@ -957,25 +966,49 @@ local toastActive = false
 local function showToast(seedName)
 	local seed = SeedByName[seedName]
 	local col = seed and RARITY_COLOR[seed.rarity] or C.white
+
 	toastSeedName.Text = seedName
 	toastSeedName.TextColor3 = col
+
 	toastFrame.Visible = true
 	toastActive = true
 
 	local s = toastFrame:FindFirstChildWhichIsA("UIStroke")
-	if s then s.Color = col end
+	if s then
+		s.Color = col
+	end
 
 	local fadeIn = TweenInfo.new(0.3, Enum.EasingStyle.Quad)
-	TweenService:Create(toastFrame, fadeIn, {BackgroundTransparency=0.1}):Play()
-	TweenService:Create(toastSeedName, fadeIn, {TextTransparency=0}):Play()
-	TweenService:Create(toastSub, fadeIn, {TextTransparency=0}):Play()
+
+	TweenService:Create(toastFrame, fadeIn, {
+		BackgroundTransparency = 0
+	}):Play()
+
+	TweenService:Create(toastSeedName, fadeIn, {
+		TextTransparency = 0
+	}):Play()
+
+	TweenService:Create(toastSub, fadeIn, {
+		TextTransparency = 0
+	}):Play()
 
 	task.delay(2.2, function()
 		local fadeOut = TweenInfo.new(0.4, Enum.EasingStyle.Quad)
-		TweenService:Create(toastFrame, fadeOut, {BackgroundTransparency=1}):Play()
-		TweenService:Create(toastSeedName, fadeOut, {TextTransparency=1}):Play()
-		TweenService:Create(toastSub, fadeOut, {TextTransparency=1}):Play()
+
+		TweenService:Create(toastFrame, fadeOut, {
+			BackgroundTransparency = 1
+		}):Play()
+
+		TweenService:Create(toastSeedName, fadeOut, {
+			TextTransparency = 1
+		}):Play()
+
+		TweenService:Create(toastSub, fadeOut, {
+			TextTransparency = 1
+		}):Play()
+
 		task.wait(0.5)
+
 		toastFrame.Visible = false
 		toastActive = false
 	end)
