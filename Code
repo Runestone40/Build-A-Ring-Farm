@@ -814,6 +814,8 @@ eggCfgBtn.MouseButton1Click:Connect(function() if eggPanelOpen then closeEgg() e
 
 -- ─── Apply Loaded Settings to UI ─────────────────────────────────────────────
 
+loadSettings()
+
 if autoRollEnabled then setRoll(true) end
 if autoBuyEnabled  then setBuy(true)  end
 if autoGearEnabled then setGear(true) end
