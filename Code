@@ -12,16 +12,18 @@ if CoreGui:FindFirstChild("RFGui") then CoreGui.RFGui:Destroy() end
 -- ─── Colors ──────────────────────────────────────────────────────────────────
 
 local C = {
-	bg      = Color3.fromRGB(10, 14, 28),       -- deep navy background
-	surface = Color3.fromRGB(18, 28, 60),        -- dark blue surface (header/rows)
-	raised  = Color3.fromRGB(22, 36, 75),        -- raised blue element
-	border  = Color3.fromRGB(80, 130, 220),      -- blue border
-	accent  = Color3.fromRGB(70, 150, 255),      -- bright blue accent
-	white   = Color3.fromRGB(210, 225, 255),     -- cool white text
-	sub     = Color3.fromRGB(110, 145, 210),     -- subdued blue-grey text
-	muted   = Color3.fromRGB(55, 80, 140),       -- muted blue
+	bg      = Color3.fromRGB(10, 14, 28),
+	surface = Color3.fromRGB(18, 28, 60),
+	raised  = Color3.fromRGB(22, 36, 75),
+	border  = Color3.fromRGB(80, 130, 220),
+	accent  = Color3.fromRGB(70, 150, 255),
+	white   = Color3.fromRGB(210, 225, 255),
+	sub     = Color3.fromRGB(110, 145, 210),
+	muted   = Color3.fromRGB(55, 80, 140),
 	green   = Color3.fromRGB(55, 200, 130),
 	red     = Color3.fromRGB(255, 80, 80),
+	gold    = Color3.fromRGB(255, 200, 60),
+	purple  = Color3.fromRGB(160, 90, 255),
 }
 
 -- ─── Seed Data ───────────────────────────────────────────────────────────────
@@ -54,13 +56,10 @@ local function parseCash(v)
 end
 
 local Seeds = {
-	-- COMMON
 	{name="Carrot",             rarity="Common",      cost=100,              income=3,       chance="Common"},
 	{name="Beetroot",           rarity="Common",      cost=250,              income=5,       chance="Common"},
 	{name="Pumpkin",            rarity="Common",      cost=500,              income=8,       chance="Common"},
 	{name="Cinnamon",           rarity="Common",      cost=nil,              income=nil,     chance="?"},
-
-	-- UNCOMMON
 	{name="Wheat",              rarity="Uncommon",    cost=600,              income=12,      chance="Uncommon"},
 	{name="Melon",              rarity="Uncommon",    cost=1200,             income=18,      chance="Uncommon"},
 	{name="Onion",              rarity="Uncommon",    cost=2500,             income=20,      chance="Uncommon"},
@@ -68,15 +67,11 @@ local Seeds = {
 	{name="Watermelon",         rarity="Uncommon",    cost=5000,             income=30,      chance="Uncommon"},
 	{name="Promise Lily",       rarity="Uncommon",    cost=nil,              income=22,      chance="Friend-o-Tron"},
 	{name="Twinflame Tulip",    rarity="Uncommon",    cost=520000,           income=450,     chance="Not rollable"},
-
-	-- RARE
 	{name="Blueberry",          rarity="Rare",        cost=15000,            income=50,      chance="Rare"},
 	{name="Cabbage",            rarity="Rare",        cost=40000,            income=85,      chance="Rare"},
 	{name="Grape",              rarity="Rare",        cost=65000,            income=120,     chance="Rare"},
 	{name="Peach",              rarity="Rare",        cost=120000,           income=180,     chance="Rare"},
 	{name="Bamboo",             rarity="Rare",        cost=90000,            income=160,     chance="Rare"},
-
-	-- EPIC
 	{name="Corn",               rarity="Epic",        cost=200000,           income=250,     chance="Epic"},
 	{name="Plum",               rarity="Epic",        cost=300000,           income=300,     chance="Epic"},
 	{name="Cauliflower",        rarity="Epic",        cost=500000,           income=400,     chance="Epic"},
@@ -87,16 +82,12 @@ local Seeds = {
 	{name="Honeysuckle",        rarity="Epic",        cost=615000,           income=500,     chance="Bee Event"},
 	{name="Martian Melon",      rarity="Epic",        cost=700000,           income=620,     chance="Alien Event"},
 	{name="Admin Sunflower",    rarity="Epic",        cost=865000,           income=725,     chance="Admin"},
-
-	-- LEGENDARY
 	{name="Spring Onion",       rarity="Legendary",   cost=2500000,          income=1200,    chance="Legendary"},
 	{name="Mango",              rarity="Legendary",   cost=4000000,          income=1600,    chance="Legendary"},
 	{name="Mushroom",           rarity="Legendary",   cost=7000000,          income=2000,    chance="Legendary"},
 	{name="Banana",             rarity="Legendary",   cost=9000000,          income=2500,    chance="Legendary"},
 	{name="Potato",             rarity="Legendary",   cost=15000000,         income=2700,    chance="Legendary"},
 	{name="Amulet Anemone",     rarity="Legendary",   cost=nil,              income=1800,    chance="Friend-o-Tron"},
-
-	-- SECRET
 	{name="Strawberry",         rarity="Secret",      cost=30000000,         income=6000,    chance="Secret"},
 	{name="Glowshroom",         rarity="Secret",      cost=45000000,         income=8000,    chance="Secret"},
 	{name="Beanstalk",          rarity="Secret",      cost=55000000,         income=8000,    chance="Secret"},
@@ -104,8 +95,6 @@ local Seeds = {
 	{name="Monsoon Crown",      rarity="Secret",      cost=65000000,         income=6500,    chance="Rain Event"},
 	{name="Starfruit",          rarity="Secret",      cost=130000000,        income=13000,   chance="Not rollable"},
 	{name="Mooncap",            rarity="Secret",      cost=nil,              income=nil,     chance="?"},
-
-	-- PRISMATIC
 	{name="Apple",              rarity="Prismatic",   cost=500000000,        income=20000,   chance="Prismatic"},
 	{name="Cherry Blossom",     rarity="Prismatic",   cost=1500000000,       income=30000,   chance="Prismatic"},
 	{name="Blood Orange",       rarity="Prismatic",   cost=1200000000,       income=35000,   chance="Prismatic"},
@@ -119,8 +108,6 @@ local Seeds = {
 	{name="Duoheart Daisy",     rarity="Prismatic",   cost=nil,              income=nil,     chance="?"},
 	{name="Crimson Higanbana",  rarity="Prismatic",   cost=35000000000000,   income=225000,  chance="Not rollable"},
 	{name="Glasswing",          rarity="Prismatic",   cost=nil,              income=nil,     chance="?"},
-
-	-- DIVINE
 	{name="Golden Apple",       rarity="Divine",      cost=5000000000,       income=65000,   chance="Divine"},
 	{name="Cocoa",              rarity="Divine",      cost=10000000000,      income=70000,   chance="Divine"},
 	{name="Crystalberry",       rarity="Divine",      cost=20000000000,      income=88000,   chance="Divine"},
@@ -131,8 +118,6 @@ local Seeds = {
 	{name="Compost Hydra",      rarity="Divine",      cost=115000000000,     income=125000,  chance="Composter"},
 	{name="Horned Melon",       rarity="Divine",      cost=3500000000,       income=80000,   chance="Trucker"},
 	{name="Pomegranate",        rarity="Divine",      cost=4000000000,       income=75000,   chance="Seed Pack"},
-
-	-- EXOTIC
 	{name="Moonflower",         rarity="Exotic",      cost=70000000000,      income=110000,  chance="Exotic"},
 	{name="Passionfruit",       rarity="Exotic",      cost=100000000000,     income=120000,  chance="Exotic"},
 	{name="Darkmatter Bramble", rarity="Exotic",      cost=1000000000000,    income=145000,  chance="Blackhole Event"},
@@ -147,8 +132,6 @@ local Seeds = {
 	{name="Dragonfruit",        rarity="Exotic",      cost=8000000000,       income=350000,  chance="Seed Pack"},
 	{name="Truckers Delight",   rarity="Exotic",      cost=nil,              income=160000,  chance="Trucker Event"},
 	{name="Heartvine Bloom",    rarity="Exotic",      cost=nil,              income=nil,     chance="Friend-o-Tron"},
-
-	-- TRANSCENDED
 	{name="Durian",             rarity="Transcended", cost=100000000000000,  income=380000,  chance="Transcended"},
 	{name="Ghost Pepper",       rarity="Transcended", cost=275000000000000,  income=500000,  chance="Transcended"},
 	{name="Papaya",             rarity="Transcended", cost=150000000000000,  income=450000,  chance="Transcended"},
@@ -166,8 +149,6 @@ local Seeds = {
 }
 local SeedByName = {}
 for _,s in ipairs(Seeds) do SeedByName[s.name]=s end
-
--- ─── Gear Data ───────────────────────────────────────────────────────────────
 
 local GearItems = {
 	{name="Fire Spray",           cost=1000000000000000, maxStock=1},
@@ -189,52 +170,96 @@ local GearItems = {
 	{name="Normal Fertilizer",    cost=500000,           maxStock=3},
 }
 
--- ─── Egg Data ─────────────────────────────────────────────────────────────────
-
 local EggItems = {
 	{name="Common Egg",   cost=25000000},
 	{name="Rare Egg",     cost=25000000000},
 	{name="Epic Egg",     cost=10000000000000},
 }
-
 local EggByName = {}
 for _,e in ipairs(EggItems) do EggByName[e.name]=e end
 
--- ─── Settings persistence ────────────────────────────────────────────────────
+-- ─── TP Locations ─────────────────────────────────────────────────────────────
+-- Edit these CFrame positions to match the actual map locations in-game.
+-- Format: {name, CFrame.new(x, y, z)}
+
+local TP_LOCATIONS = {
+	{name="Farm",        dynamic=true},
+	{name="Egg Shop",   pos=CFrame.new(-205, 9, 18)},
+	{name="Leaderboard",    pos=CFrame.new(209, 9, 19)},
+}
+
+-- ─── Plot Finder ─────────────────────────────────────────────────────────────
+-- Reliably finds the local player's owned plot in workspace.Map.Plots
+-- by checking common attribute names on each plot model.
+
+local plotsFolder = workspace:WaitForChild("Map"):WaitForChild("Plots")
+
+local PLOT_ATTR_CANDIDATES = {
+	"OwnerUserId", "UserId", "Owner", "Player", "OwnerName", "DisplayName",
+}
+
+local function getPlotOwnerValue(plot)
+	for _, attrName in ipairs(PLOT_ATTR_CANDIDATES) do
+		local value = plot:GetAttribute(attrName)
+		if value ~= nil then return attrName, value end
+	end
+	return nil, nil
+end
+
+local function findPlayerPlot(targetPlayer)
+	for _, plot in ipairs(plotsFolder:GetChildren()) do
+		local _, value = getPlotOwnerValue(plot)
+		if value then
+			if typeof(value) == "number" and value == targetPlayer.UserId then
+				return plot
+			end
+			if typeof(value) == "string" then
+				if value == targetPlayer.Name or value == targetPlayer.DisplayName then
+					return plot
+				end
+			end
+		end
+	end
+	return nil
+end
+
+-- Cache the local player's plot (refreshed on demand)
+local cachedHomePlot = nil
+local function getHomePlot()
+	if cachedHomePlot and cachedHomePlot.Parent then return cachedHomePlot end
+	cachedHomePlot = findPlayerPlot(player)
+	return cachedHomePlot
+end
+
+-- ─── Settings ────────────────────────────────────────────────────────────────
 
 local SETTINGS_FILE = "buildaringfarm_settings.json"
 local HttpService = game:GetService("HttpService")
 
--- ─── State ───────────────────────────────────────────────────────────────────
-
-local autoRollEnabled  = false
-local autoBuyEnabled   = false
-local autoGearEnabled  = false
-local autoFertEnabled  = false
-local autoSellEnabled  = false
+local autoRollEnabled = false
+local autoBuyEnabled  = false
+local autoGearEnabled = false
+local autoFertEnabled = false
+local autoSellEnabled = false
 local autoEggEnabled  = false
 local isBuying  = false
 local buyLock   = false
 local autoBuyList = {}
 local gearBuyList = {}
 local gearStock   = {}
-local autoEggList     = {}
+local autoEggList = {}
 
 local function saveSettings()
 	local data = {
-		autoRoll  = autoRollEnabled,
-		autoBuy   = autoBuyEnabled,
-		autoGear  = autoGearEnabled,
-		autoFert  = autoFertEnabled,
-		autoSell  = autoSellEnabled,
-		autoEgg   = autoEggEnabled,   -- add this
-		buyList   = {},
-		gearList  = {},
-		eggList   = {},               -- add this
+		autoRoll=autoRollEnabled, autoBuy=autoBuyEnabled,
+		autoGear=autoGearEnabled, autoFert=autoFertEnabled,
+		autoSell=autoSellEnabled, autoEgg=autoEggEnabled,
+		autoCollect=autoCollectEnabled,
+		buyList={}, gearList={}, eggList={},
 	}
-	for name in pairs(autoBuyList) do table.insert(data.buyList, name) end
-	for name in pairs(gearBuyList) do table.insert(data.gearList, name) end
-	for name in pairs(autoEggList) do table.insert(data.eggList, name) end  -- add this
+	for name in pairs(autoBuyList)  do table.insert(data.buyList,  name) end
+	for name in pairs(gearBuyList)  do table.insert(data.gearList, name) end
+	for name in pairs(autoEggList)  do table.insert(data.eggList,  name) end
 	pcall(writefile, SETTINGS_FILE, HttpService:JSONEncode(data))
 end
 
@@ -243,34 +268,27 @@ local function loadSettings()
 	if not ok or not raw or raw == "" then return end
 	local ok2, data = pcall(function() return HttpService:JSONDecode(raw) end)
 	if not ok2 or type(data) ~= "table" then return end
-
 	if data.autoRoll then autoRollEnabled = true end
 	if data.autoBuy  then autoBuyEnabled  = true end
 	if data.autoGear then autoGearEnabled = true end
 	if data.autoFert then autoFertEnabled = true end
 	if data.autoSell then autoSellEnabled = true end
-	if data.autoEgg then autoEggEnabled = true end
-
-	if type(data.eggList) == "table" then
-		for _, name in ipairs(data.eggList) do autoEggList[name] = true end
-	end
-	if type(data.buyList) == "table" then
-		for _, name in ipairs(data.buyList) do autoBuyList[name] = true end
-	end
-	if type(data.gearList) == "table" then
-		for _, name in ipairs(data.gearList) do gearBuyList[name] = true end
-	end
+	if data.autoEgg  then autoEggEnabled  = true end
+	if data.autoCollect then autoCollectEnabled = true end
+	if type(data.eggList)  == "table" then for _,n in ipairs(data.eggList)  do autoEggList[n]  = true end end
+	if type(data.buyList)  == "table" then for _,n in ipairs(data.buyList)  do autoBuyList[n]  = true end end
+	if type(data.gearList) == "table" then for _,n in ipairs(data.gearList) do gearBuyList[n]  = true end end
 end
 
 -- ─── Remotes ─────────────────────────────────────────────────────────────────
 
-local Remotes = ReplicatedStorage:WaitForChild("Remotes")
-local RollSeeds = Remotes:WaitForChild("RollSeeds")
-local BuySeed = Remotes:WaitForChild("BuySeed")
+local Remotes         = ReplicatedStorage:WaitForChild("Remotes")
+local RollSeeds       = Remotes:WaitForChild("RollSeeds")
+local BuySeed         = Remotes:WaitForChild("BuySeed")
 local GearTransaction = Remotes:WaitForChild("Gear"):WaitForChild("Transaction")
-local SellRemote = Remotes:WaitForChild("SellCrates")
+local SellRemote      = Remotes:WaitForChild("SellCrates")
 
--- ─── GUI ─────────────────────────────────────────────────────────────────────
+-- ─── GUI Root ────────────────────────────────────────────────────────────────
 
 local gui = Instance.new("ScreenGui")
 gui.Name = "RFGui"
@@ -344,161 +362,179 @@ end
 
 -- ─── Main Window ─────────────────────────────────────────────────────────────
 
-local win=Instance.new("Frame",gui)
-win.Size=UDim2.new(0,240,0,0)
-win.Position=UDim2.new(0,20,0.5,-110)
-win.BackgroundColor3=C.bg
-win.BackgroundTransparency=0.08
-win.BorderSizePixel=0
-mkCorner(win,10)
-mkStroke(win,C.border,1,0.5)
+local WIN_W = 260
+local win = Instance.new("Frame", gui)
+win.Size = UDim2.new(0, WIN_W, 0, 0)
+win.Position = UDim2.new(0, 20, 0.5, -150)
+win.BackgroundColor3 = C.bg
+win.BackgroundTransparency = 0.08
+win.BorderSizePixel = 0
+mkCorner(win, 10)
+mkStroke(win, C.border, 1, 0.5)
 
-local winBlocker=Instance.new("TextButton",win)
-winBlocker.Size=UDim2.new(1,0,1,0)
-winBlocker.BackgroundTransparency=1
-winBlocker.Text=""
-winBlocker.ZIndex=0
-winBlocker.AutoButtonColor=false
+local winBlocker = Instance.new("TextButton", win)
+winBlocker.Size = UDim2.new(1,0,1,0)
+winBlocker.BackgroundTransparency = 1
+winBlocker.Text = ""
+winBlocker.ZIndex = 0
+winBlocker.AutoButtonColor = false
 
 -- ─── Header ──────────────────────────────────────────────────────────────────
 
-local header=Instance.new("Frame",win)
-header.Size=UDim2.new(1,0,0,44)
-header.BackgroundColor3=C.surface
-header.BorderSizePixel=0
-header.ZIndex=2
-mkCorner(header,10)
+local header = Instance.new("Frame", win)
+header.Size = UDim2.new(1,0,0,44)
+header.BackgroundColor3 = C.surface
+header.BorderSizePixel = 0
+header.ZIndex = 2
+mkCorner(header, 10)
 
-local hp=Instance.new("Frame",header)
-hp.Size=UDim2.new(1,0,0.5,0);hp.Position=UDim2.new(0,0,0.5,0)
-hp.BackgroundColor3=C.surface;hp.BorderSizePixel=0;hp.ZIndex=2
+-- patch bottom half so rounded corners only show on top
+local hp = Instance.new("Frame", header)
+hp.Size = UDim2.new(1,0,0.5,0); hp.Position = UDim2.new(0,0,0.5,0)
+hp.BackgroundColor3 = C.surface; hp.BorderSizePixel = 0; hp.ZIndex = 2
 
-local abar=Instance.new("Frame",header)
-abar.Size=UDim2.new(0,3,0,18);abar.Position=UDim2.new(0,12,0.5,-9)
-abar.BackgroundColor3=C.accent;abar.BorderSizePixel=0;abar.ZIndex=3;mkCorner(abar,2)
+local abar = Instance.new("Frame", header)
+abar.Size = UDim2.new(0,3,0,18); abar.Position = UDim2.new(0,12,0.5,-9)
+abar.BackgroundColor3 = C.accent; abar.BorderSizePixel = 0; abar.ZIndex = 3
+mkCorner(abar, 2)
 
-local titleLbl=Instance.new("TextLabel",header)
-titleLbl.Size=UDim2.new(1,-80,1,0);titleLbl.Position=UDim2.new(0,22,0,0)
-titleLbl.BackgroundTransparency=1;titleLbl.Text="Build a Ring Farm"
-titleLbl.TextColor3=C.white;titleLbl.Font=Enum.Font.GothamBold;titleLbl.TextSize=14
-titleLbl.TextXAlignment=Enum.TextXAlignment.Left;titleLbl.ZIndex=3
+local titleLbl = Instance.new("TextLabel", header)
+titleLbl.Size = UDim2.new(1,-80,1,0); titleLbl.Position = UDim2.new(0,22,0,0)
+titleLbl.BackgroundTransparency = 1; titleLbl.Text = "Build a Ring Farm"
+titleLbl.TextColor3 = C.white; titleLbl.Font = Enum.Font.GothamBold; titleLbl.TextSize = 14
+titleLbl.TextXAlignment = Enum.TextXAlignment.Left; titleLbl.ZIndex = 3
 
--- ─── Close Button ────────────────────────────────────────────────────────────
+draggable(header, win)
 
-local closeBtn=Instance.new("TextButton",header)
-closeBtn.Size=UDim2.new(0,26,0,26)
-closeBtn.Position=UDim2.new(1,-34,0.5,-13)
-closeBtn.BackgroundColor3=Color3.fromRGB(55,25,25)
-closeBtn.BorderSizePixel=0
-closeBtn.Text="X"
-closeBtn.TextColor3=C.red
-closeBtn.Font=Enum.Font.GothamBold
-closeBtn.TextSize=13
-closeBtn.ZIndex=5
-closeBtn.AutoButtonColor=false
-mkCorner(closeBtn,6)
-mkStroke(closeBtn,C.red,1,0.6)
+-- ─── Tab Bar ─────────────────────────────────────────────────────────────────
 
-closeBtn.MouseEnter:Connect(function()
-	TweenService:Create(closeBtn,tw,{BackgroundColor3=Color3.fromRGB(90,30,30)}):Play()
-	TweenService:Create(closeBtn,tw,{TextColor3=Color3.fromRGB(255,100,100)}):Play()
-end)
-closeBtn.MouseLeave:Connect(function()
-	TweenService:Create(closeBtn,tw,{BackgroundColor3=Color3.fromRGB(55,25,25)}):Play()
-	TweenService:Create(closeBtn,tw,{TextColor3=C.red}):Play()
-end)
+local TAB_Y = 44
+local TAB_H = 34
 
-closeBtn.MouseButton1Click:Connect(function()
-	autoRollEnabled = false
-	autoBuyEnabled  = false
-	autoGearEnabled = false
-	autoFertEnabled = false
-	autoSellEnabled = false
-	local fadeOut = TweenInfo.new(0.2, Enum.EasingStyle.Quad)
-	TweenService:Create(win, fadeOut, {BackgroundTransparency=1}):Play()
-	task.delay(0.25, function()
-		if gui and gui.Parent then gui:Destroy() end
-	end)
-end)
+local tabBar = Instance.new("Frame", win)
+tabBar.Size = UDim2.new(1,-16,0,TAB_H)
+tabBar.Position = UDim2.new(0,8,0,TAB_Y)
+tabBar.BackgroundTransparency = 1
+tabBar.BorderSizePixel = 0
+tabBar.ZIndex = 3
 
-draggable(header,win)
+local TABS = {"Farming", "TP", "Events"}
+local tabBtns = {}
+local tabPages = {}
+local activeTab = "Farming"
 
--- ─── Row Builder ─────────────────────────────────────────────────────────────
+local tabLayout = Instance.new("UIListLayout", tabBar)
+tabLayout.FillDirection = Enum.FillDirection.Horizontal
+tabLayout.Padding = UDim.new(0,4)
+tabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+tabLayout.VerticalAlignment = Enum.VerticalAlignment.Center
 
-local ROW_H, ROW_GAP, START_Y = 48, 1, 45
-local rowCount = 0
+for i, tabName in ipairs(TABS) do
+	local btn = Instance.new("TextButton", tabBar)
+	btn.Size = UDim2.new(0, 70, 0, 26)
+	btn.BackgroundColor3 = C.raised
+	btn.BorderSizePixel = 0
+	btn.Text = tabName
+	btn.TextColor3 = C.sub
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 11
+	btn.ZIndex = 4
+	btn.LayoutOrder = i
+	btn.AutoButtonColor = false
+	mkCorner(btn, 6)
+	tabBtns[tabName] = btn
+end
 
-local function addRow(label, hasConfig, configLabel)
-	local y = START_Y + rowCount*(ROW_H+ROW_GAP)
-	rowCount += 1
+-- ─── Content Area starts below tab bar ───────────────────────────────────────
 
-	local sep=Instance.new("Frame",win)
-	sep.Size=UDim2.new(1,-24,0,1);sep.Position=UDim2.new(0,12,0,y-1)
-	sep.BackgroundColor3=C.border;sep.BorderSizePixel=0;sep.BackgroundTransparency=0.6
+local CONTENT_Y = TAB_Y + TAB_H + 6
 
-	local row=Instance.new("Frame",win)
-	row.Size=UDim2.new(1,0,0,ROW_H);row.Position=UDim2.new(0,0,0,y)
-	row.BackgroundTransparency=1
+-- ─── Tab Page Helper ─────────────────────────────────────────────────────────
 
-	local lbl=Instance.new("TextLabel",row)
-	lbl.Size=UDim2.new(0,100,1,0);lbl.Position=UDim2.new(0,16,0,0)
-	lbl.BackgroundTransparency=1;lbl.Text=label
-	lbl.TextColor3=C.white;lbl.Font=Enum.Font.GothamBold;lbl.TextSize=13
-	lbl.TextXAlignment=Enum.TextXAlignment.Left
+local function makeTabPage()
+	local page = Instance.new("Frame", win)
+	page.Size = UDim2.new(1,0,0,0)  -- height set later
+	page.Position = UDim2.new(0,0,0,CONTENT_Y)
+	page.BackgroundTransparency = 1
+	page.BorderSizePixel = 0
+	page.Visible = false
+	page.ZIndex = 2
+	return page
+end
 
-	local track,setToggle,getToggle=mkToggle(row)
-	track.Position=UDim2.new(1,-52,0.5,-10)
+-- ════════════════════════════════════════════════════════════════════════════
+-- ─── FARMING TAB ─────────────────────────────────────────────────────────
+-- ════════════════════════════════════════════════════════════════════════════
+
+local farmPage = makeTabPage()
+tabPages["Farming"] = farmPage
+
+local ROW_H, ROW_GAP = 48, 1
+local farmRowCount = 0
+
+local function addFarmRow(label, hasConfig, configLabel)
+	local y = farmRowCount * (ROW_H + ROW_GAP)
+	farmRowCount += 1
+
+	local sep = Instance.new("Frame", farmPage)
+	sep.Size = UDim2.new(1,-24,0,1); sep.Position = UDim2.new(0,12,0,y)
+	sep.BackgroundColor3 = C.border; sep.BorderSizePixel = 0; sep.BackgroundTransparency = 0.6
+
+	local row = Instance.new("Frame", farmPage)
+	row.Size = UDim2.new(1,0,0,ROW_H); row.Position = UDim2.new(0,0,0,y+1)
+	row.BackgroundTransparency = 1
+
+	local lbl = Instance.new("TextLabel", row)
+	lbl.Size = UDim2.new(0,110,1,0); lbl.Position = UDim2.new(0,16,0,0)
+	lbl.BackgroundTransparency = 1; lbl.Text = label
+	lbl.TextColor3 = C.white; lbl.Font = Enum.Font.GothamBold; lbl.TextSize = 13
+	lbl.TextXAlignment = Enum.TextXAlignment.Left
+
+	local track, setToggle, getToggle = mkToggle(row)
+	track.Position = UDim2.new(1,-52,0.5,-10)
 
 	local cfgBtn
 	if hasConfig then
-		cfgBtn=mkBtn(row,configLabel or "Config",C.surface,C.sub,10)
-		cfgBtn.Size=UDim2.new(0,44,0,20)
-		cfgBtn.Position=UDim2.new(1,-100,0.5,-10)
-		mkCorner(cfgBtn,5)
-		--	mkStroke(cfgBtn,C.border,1,0.5)
+		cfgBtn = mkBtn(row, configLabel or "Config", C.surface, C.sub, 10)
+		cfgBtn.Size = UDim2.new(0,44,0,20)
+		cfgBtn.Position = UDim2.new(1,-100,0.5,-10)
+		mkCorner(cfgBtn, 5)
 	end
 
-	return track,setToggle,getToggle,cfgBtn
+	return track, setToggle, getToggle, cfgBtn
 end
 
-local rollTrack,setRoll,getRoll             = addRow("Auto Roll")
-local buyTrack,setBuy,getBuy,buyCfgBtn      = addRow("Auto Buy","Seeds","Seeds")
-local gearTrack,setGear,getGear,gearCfgBtn = addRow("Auto Gear",true,"Items")
-local fertTrack,setFert,getFert             = addRow("Auto Fert")
-local sellTrack,setSell,getSell             = addRow("Auto Sell")
-local eggTrack,setEgg,getEgg,eggCfgBtn = addRow("Auto Eggs",true,"Eggs")
+local rollTrack,  setRoll, getRoll             = addFarmRow("Auto Roll")
+local buyTrack,   setBuy,  getBuy,  buyCfgBtn  = addFarmRow("Auto Buy", true, "Seeds")
+local gearTrack,  setGear, getGear, gearCfgBtn = addFarmRow("Auto Gear", true, "Items")
+local fertTrack,  setFert, getFert             = addFarmRow("Auto Fert")
+local sellTrack,  setSell, getSell             = addFarmRow("Auto Sell")
+local eggTrack,   setEgg,  getEgg,  eggCfgBtn  = addFarmRow("Auto Eggs", true, "Eggs")
 
--- ─── Status + Footer ─────────────────────────────────────────────────────────
+-- ─── Status bar ──────────────────────────────────────────────────────────────
 
-local statusY = START_Y + rowCount*(ROW_H+ROW_GAP) + 4
+local statusY = farmRowCount * (ROW_H + ROW_GAP) + 4
 
-local sep2=Instance.new("Frame",win)
-sep2.Size=UDim2.new(1,-24,0,1);sep2.Position=UDim2.new(0,12,0,statusY-2)
-sep2.BackgroundColor3=C.border;sep2.BorderSizePixel=0;sep2.BackgroundTransparency=0.6
+local sep2 = Instance.new("Frame", farmPage)
+sep2.Size = UDim2.new(1,-24,0,1); sep2.Position = UDim2.new(0,12,0,statusY-2)
+sep2.BackgroundColor3 = C.border; sep2.BorderSizePixel = 0; sep2.BackgroundTransparency = 0.6
 
-local statusRow=Instance.new("Frame",win)
-statusRow.Size=UDim2.new(1,0,0,24);statusRow.Position=UDim2.new(0,0,0,statusY+2)
-statusRow.BackgroundTransparency=1
+local statusRow = Instance.new("Frame", farmPage)
+statusRow.Size = UDim2.new(1,0,0,24); statusRow.Position = UDim2.new(0,0,0,statusY+2)
+statusRow.BackgroundTransparency = 1
 
-local statusDot=Instance.new("Frame",statusRow)
-statusDot.Size=UDim2.new(0,6,0,6);statusDot.Position=UDim2.new(0,14,0.5,-3)
-statusDot.BackgroundColor3=C.muted;statusDot.BorderSizePixel=0;mkCorner(statusDot,3)
+local statusDot = Instance.new("Frame", statusRow)
+statusDot.Size = UDim2.new(0,6,0,6); statusDot.Position = UDim2.new(0,14,0.5,-3)
+statusDot.BackgroundColor3 = C.muted; statusDot.BorderSizePixel = 0; mkCorner(statusDot,3)
 
-local statusLbl=Instance.new("TextLabel",statusRow)
-statusLbl.Size=UDim2.new(1,-30,1,0);statusLbl.Position=UDim2.new(0,26,0,0)
-statusLbl.BackgroundTransparency=1;statusLbl.Text="Idle"
-statusLbl.TextColor3=C.muted;statusLbl.Font=Enum.Font.Gotham;statusLbl.TextSize=11
-statusLbl.TextXAlignment=Enum.TextXAlignment.Left
+local statusLbl = Instance.new("TextLabel", statusRow)
+statusLbl.Size = UDim2.new(1,-30,1,0); statusLbl.Position = UDim2.new(0,26,0,0)
+statusLbl.BackgroundTransparency = 1; statusLbl.Text = "Idle"
+statusLbl.TextColor3 = C.muted; statusLbl.Font = Enum.Font.Gotham; statusLbl.TextSize = 11
+statusLbl.TextXAlignment = Enum.TextXAlignment.Left
 
-local footer=Instance.new("TextLabel",win)
-footer.Size=UDim2.new(1,-16,0,34);footer.Position=UDim2.new(0,8,0,statusY+24)
-footer.BackgroundTransparency=1
-footer.Text="Made by Beatle"
-footer.TextColor3=Color3.fromRGB(190,200,240);footer.Font=Enum.Font.Gotham;footer.TextSize=11
-footer.TextXAlignment=Enum.TextXAlignment.Center
-footer.LineHeight=1.3
-
-win.Size=UDim2.new(0,240,0,statusY+58)
+local FARM_PAGE_H = statusY + 28
+farmPage.Size = UDim2.new(1,0,0,FARM_PAGE_H)
 
 local function setStatus()
 	local parts = {}
@@ -507,90 +543,397 @@ local function setStatus()
 	if autoGearEnabled then table.insert(parts, "Gear")    end
 	if autoFertEnabled then table.insert(parts, "Fert")    end
 	if autoSellEnabled then table.insert(parts, "Selling") end
-	if autoEggEnabled then table.insert(parts, "Eggs") end
-
+	if autoEggEnabled  then table.insert(parts, "Eggs")    end
 	if #parts == 0 then
-		statusLbl.Text = "Idle"
-		statusLbl.TextColor3 = C.muted
-		statusDot.BackgroundColor3 = C.muted
+		statusLbl.Text = "Idle"; statusLbl.TextColor3 = C.muted; statusDot.BackgroundColor3 = C.muted
 	else
-		statusLbl.Text = table.concat(parts, "  ·  ")
-		statusLbl.TextColor3 = C.accent
-		statusDot.BackgroundColor3 = C.accent
+		statusLbl.Text = table.concat(parts, "  ·  "); statusLbl.TextColor3 = C.accent; statusDot.BackgroundColor3 = C.accent
 	end
 end
 
--- ─── Panel Builder ───────────────────────────────────────────────────────────
+-- ════════════════════════════════════════════════════════════════════════════
+-- ─── TP TAB ───────────────────────────────────────────────────────────────
+-- ════════════════════════════════════════════════════════════════════════════
+
+local tpPage = makeTabPage()
+tabPages["TP"] = tpPage
+
+-- Info label
+local tpInfoLbl = Instance.new("TextLabel", tpPage)
+tpInfoLbl.Size = UDim2.new(1,-16,0,18)
+tpInfoLbl.Position = UDim2.new(0,8,0,4)
+tpInfoLbl.BackgroundTransparency = 1
+tpInfoLbl.Text = "Teleport to Location"
+tpInfoLbl.TextColor3 = C.sub
+tpInfoLbl.Font = Enum.Font.GothamBold
+tpInfoLbl.TextSize = 10
+tpInfoLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Scrollable area for TP buttons
+local tpScroll = Instance.new("ScrollingFrame", tpPage)
+tpScroll.Size = UDim2.new(1,-8,0,0)  -- height set below
+tpScroll.Position = UDim2.new(0,4,0,24)
+tpScroll.BackgroundTransparency = 1
+tpScroll.BorderSizePixel = 0
+tpScroll.ScrollBarThickness = 2
+tpScroll.ScrollBarImageColor3 = C.accent
+tpScroll.CanvasSize = UDim2.new(0,0,0,0)
+
+local tpGrid = Instance.new("UIGridLayout", tpScroll)
+tpGrid.CellSize = UDim2.new(0.5,-6,0,36)
+tpGrid.CellPadding = UDim2.new(0,4,0,4)
+tpGrid.SortOrder = Enum.SortOrder.LayoutOrder
+tpGrid.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+local tpPad = Instance.new("UIPadding", tpScroll)
+tpPad.PaddingLeft = UDim.new(0,4)
+tpPad.PaddingRight = UDim.new(0,4)
+tpPad.PaddingTop = UDim.new(0,4)
+tpPad.PaddingBottom = UDim.new(0,4)
+
+local tpFeedback = Instance.new("TextLabel", tpPage)
+tpFeedback.BackgroundTransparency = 1
+tpFeedback.Size = UDim2.new(1,-16,0,14)
+tpFeedback.TextColor3 = C.green
+tpFeedback.Font = Enum.Font.Gotham
+tpFeedback.TextSize = 10
+tpFeedback.TextXAlignment = Enum.TextXAlignment.Center
+tpFeedback.Text = ""
+
+local tpFeedbackThread = nil
+
+local function showTpFeedback(msg, col)
+	tpFeedback.Text = msg
+	tpFeedback.TextColor3 = col or C.green
+	if tpFeedbackThread then task.cancel(tpFeedbackThread) end
+	tpFeedbackThread = task.delay(2, function() tpFeedback.Text = "" end)
+end
+
+for i, loc in ipairs(TP_LOCATIONS) do
+	local btn = Instance.new("TextButton", tpScroll)
+	btn.Size = UDim2.new(0,0,0,0)  -- controlled by grid
+	btn.BackgroundColor3 = C.surface
+	btn.BorderSizePixel = 0
+	btn.Text = loc.name
+	btn.TextColor3 = C.white
+	btn.Font = Enum.Font.Gotham
+	btn.TextSize = 11
+	btn.TextWrapped = true
+	btn.LayoutOrder = i
+	btn.AutoButtonColor = false
+	mkCorner(btn, 6)
+	mkStroke(btn, C.border, 1, 0.6)
+
+	btn.MouseEnter:Connect(function()
+		TweenService:Create(btn, tw, {BackgroundColor3=C.raised}):Play()
+		TweenService:Create(btn, tw, {TextColor3=C.accent}):Play()
+	end)
+	btn.MouseLeave:Connect(function()
+		TweenService:Create(btn, tw, {BackgroundColor3=C.surface}):Play()
+		TweenService:Create(btn, tw, {TextColor3=C.white}):Play()
+	end)
+
+	btn.MouseButton1Click:Connect(function()
+		local char = player.Character
+		local hrp  = char and char:FindFirstChild("HumanoidRootPart")
+		if not hrp then showTpFeedback("No character found!", C.red); return end
+
+		local dest
+		if loc.dynamic then
+			-- Resolve plot at click-time
+			local plot = getHomePlot()
+			if not plot then
+				showTpFeedback("Plot not found yet!", C.red); return
+			end
+			-- Teleport to the centre of the plot's primary part, or its CFrame
+			local primary = plot:FindFirstChildWhichIsA("BasePart")
+			dest = primary and (primary.CFrame + Vector3.new(0, 5, 0)) or nil
+			if not dest then showTpFeedback("Plot has no parts!", C.red); return end
+		else
+			dest = loc.pos
+		end
+
+		hrp.CFrame = dest
+		showTpFeedback("Teleported to " .. loc.name, C.green)
+		TweenService:Create(btn, tw, {BackgroundColor3=C.accent}):Play()
+		task.delay(0.5, function()
+			TweenService:Create(btn, tw, {BackgroundColor3=C.surface}):Play()
+		end)
+	end)
+end
+
+-- Dynamic height for TP scroll
+tpGrid:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+	local h = tpGrid.AbsoluteContentSize.Y + 12
+	tpScroll.CanvasSize = UDim2.new(0,0,0,h)
+	local clampedH = math.min(h, 260)
+	tpScroll.Size = UDim2.new(1,-8,0,clampedH)
+	tpFeedback.Position = UDim2.new(0,8,0,clampedH + 26)
+	tpPage.Size = UDim2.new(1,0,0,clampedH + 44)
+end)
+
+-- ════════════════════════════════════════════════════════════════════════════
+-- ─── EVENTS TAB ───────────────────────────────────────────────────────────
+-- ════════════════════════════════════════════════════════════════════════════
+
+local eventsPage = makeTabPage()
+tabPages["Events"] = eventsPage
+
+-- Section header
+local evSectionLbl = Instance.new("TextLabel", eventsPage)
+evSectionLbl.Size = UDim2.new(1,-16,0,14)
+evSectionLbl.Position = UDim2.new(0,8,0,6)
+evSectionLbl.BackgroundTransparency = 1
+evSectionLbl.Text = "EVENT AUTOMATION"
+evSectionLbl.TextColor3 = C.sub
+evSectionLbl.Font = Enum.Font.GothamBold
+evSectionLbl.TextSize = 9
+evSectionLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+-- ─── Auto Collect row ────────────────────────────────────────────────────────
+-- Shared row builder (same style as Farming rows but parented to eventsPage)
+
+local EV_ROW_H = 48
+local evRowCount = 0
+
+local function addEventRow(parent, label, sublabel)
+	local y = 22 + evRowCount * (EV_ROW_H + 1)
+	evRowCount += 1
+
+	local sep = Instance.new("Frame", parent)
+	sep.Size = UDim2.new(1,-24,0,1); sep.Position = UDim2.new(0,12,0,y)
+	sep.BackgroundColor3 = C.border; sep.BorderSizePixel = 0; sep.BackgroundTransparency = 0.6
+
+	local row = Instance.new("Frame", parent)
+	row.Size = UDim2.new(1,0,0,EV_ROW_H); row.Position = UDim2.new(0,0,0,y+1)
+	row.BackgroundTransparency = 1
+
+	local lbl = Instance.new("TextLabel", row)
+	lbl.Size = UDim2.new(0,140,0,20); lbl.Position = UDim2.new(0,16,0,7)
+	lbl.BackgroundTransparency = 1; lbl.Text = label
+	lbl.TextColor3 = C.white; lbl.Font = Enum.Font.GothamBold; lbl.TextSize = 13
+	lbl.TextXAlignment = Enum.TextXAlignment.Left
+
+	if sublabel then
+		local sub = Instance.new("TextLabel", row)
+		sub.Size = UDim2.new(0,160,0,13); sub.Position = UDim2.new(0,16,0,27)
+		sub.BackgroundTransparency = 1; sub.Text = sublabel
+		sub.TextColor3 = C.muted; sub.Font = Enum.Font.Gotham; sub.TextSize = 9
+		sub.TextXAlignment = Enum.TextXAlignment.Left
+	end
+
+	local track, setToggle, getToggle = mkToggle(row)
+	track.Position = UDim2.new(1,-52,0.5,-10)
+
+	return track, setToggle, getToggle
+end
+
+local autoCollectEnabled = false
+
+local collectTrack, setCollect, getCollect = addEventRow(
+	eventsPage,
+	"Auto Collect",
+	"Teleports to nearest CollectPrompt"
+)
+
+-- Status dot + label for events page
+local evStatusY = 22 + evRowCount * (EV_ROW_H + 1) + 4
+
+local evSep2 = Instance.new("Frame", eventsPage)
+evSep2.Size = UDim2.new(1,-24,0,1); evSep2.Position = UDim2.new(0,12,0,evStatusY-2)
+evSep2.BackgroundColor3 = C.border; evSep2.BorderSizePixel = 0; evSep2.BackgroundTransparency = 0.6
+
+local evStatusRow = Instance.new("Frame", eventsPage)
+evStatusRow.Size = UDim2.new(1,0,0,22); evStatusRow.Position = UDim2.new(0,0,0,evStatusY+2)
+evStatusRow.BackgroundTransparency = 1
+
+local evStatusDot = Instance.new("Frame", evStatusRow)
+evStatusDot.Size = UDim2.new(0,6,0,6); evStatusDot.Position = UDim2.new(0,14,0.5,-3)
+evStatusDot.BackgroundColor3 = C.muted; evStatusDot.BorderSizePixel = 0; mkCorner(evStatusDot,3)
+
+local evStatusLbl = Instance.new("TextLabel", evStatusRow)
+evStatusLbl.Size = UDim2.new(1,-30,1,0); evStatusLbl.Position = UDim2.new(0,26,0,0)
+evStatusLbl.BackgroundTransparency = 1; evStatusLbl.Text = "Idle"
+evStatusLbl.TextColor3 = C.muted; evStatusLbl.Font = Enum.Font.Gotham; evStatusLbl.TextSize = 11
+evStatusLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+local EV_PAGE_H = evStatusY + 26
+eventsPage.Size = UDim2.new(1,0,0,EV_PAGE_H)
+
+local function setEvStatus()
+	if autoCollectEnabled then
+		evStatusLbl.Text = "Collecting"; evStatusLbl.TextColor3 = C.accent
+		evStatusDot.BackgroundColor3 = C.accent
+	else
+		evStatusLbl.Text = "Idle"; evStatusLbl.TextColor3 = C.muted
+		evStatusDot.BackgroundColor3 = C.muted
+	end
+end
+
+-- ─── Auto Collect Logic ───────────────────────────────────────────────────────
+
+local function getCollectPrompts()
+	local prompts = {}
+
+	for _, obj in ipairs(honeycombRoot:GetDescendants()) do
+		if obj:IsA("ProximityPrompt") and obj.Name == "CollectPrompt" then
+			local part = obj.Parent
+
+			if part and part:IsA("BasePart") then
+				prompts[#prompts + 1] = {prompt = obj, part = part}
+			else
+				local fallback = part and part:FindFirstChildWhichIsA("BasePart", true)
+				if fallback then
+					prompts[#prompts + 1] = {prompt = obj, part = fallback}
+				end
+			end
+		end
+	end
+
+	return prompts
+end
+
+local function teleportToNearestCollectPrompt(player)
+	local character = player.Character or player.CharacterAdded:Wait()
+	local root = character:WaitForChild("HumanoidRootPart")
+
+	local nearest, nearestDist = nil, math.huge
+
+	for _, data in ipairs(getCollectPrompts()) do
+		local dist = (root.Position - data.part.Position).Magnitude
+		if dist < nearestDist then
+			nearestDist = dist
+			nearest = data
+		end
+	end
+
+	if nearest then
+		root.CFrame = nearest.part.CFrame + Vector3.new(0, 3, 0)
+		task.wait(0.1)
+		fireproximityprompt(nearest.prompt)
+	end
+end
+
+-- Toggle handler
+collectTrack.InputBegan:Connect(function(i)
+	if i.UserInputType ~= Enum.UserInputType.MouseButton1 then return end
+	autoCollectEnabled = not getCollect()
+	setCollect(autoCollectEnabled)
+	setEvStatus()
+	saveSettings()
+end)
+
+-- Auto Collect loop
+task.spawn(function()
+	while true do
+		task.wait(1.5)
+		if autoCollectEnabled then
+			pcall(teleportToNearestCollectPrompt)
+		end
+	end
+end)
+
+-- ─── Footer (shared, always at bottom of win) ────────────────────────────────
+
+local footerLbl = Instance.new("TextLabel", win)
+footerLbl.BackgroundTransparency = 1
+footerLbl.Text = "Made by Beatle"
+footerLbl.TextColor3 = Color3.fromRGB(190,200,240)
+footerLbl.Font = Enum.Font.Gotham
+footerLbl.TextSize = 11
+footerLbl.TextXAlignment = Enum.TextXAlignment.Center
+footerLbl.Size = UDim2.new(1,-16,0,28)
+
+-- ─── Tab Switching Logic ─────────────────────────────────────────────────────
+
+local function switchTab(name)
+	activeTab = name
+
+	for _, page in pairs(tabPages) do page.Visible = false end
+
+	local page = tabPages[name]
+	if page then
+		page.Visible = true
+		-- Resize win to fit page + header + tabbar + footer
+		local pageH = page.Size.Y.Offset
+		local totalH = CONTENT_Y + pageH + 32
+		win.Size = UDim2.new(0, WIN_W, 0, totalH)
+		footerLbl.Position = UDim2.new(0,8,0, CONTENT_Y + pageH + 4)
+	end
+
+	for tabName, btn in pairs(tabBtns) do
+		if tabName == name then
+			TweenService:Create(btn, tw, {BackgroundColor3=C.accent}):Play()
+			TweenService:Create(btn, tw, {TextColor3=C.white}):Play()
+		else
+			TweenService:Create(btn, tw, {BackgroundColor3=C.raised}):Play()
+			TweenService:Create(btn, tw, {TextColor3=C.sub}):Play()
+		end
+	end
+end
+
+for _, tabName in ipairs(TABS) do
+	tabBtns[tabName].MouseButton1Click:Connect(function()
+		switchTab(tabName)
+	end)
+end
+
+-- ─── Panel Builder (for Seed/Gear/Egg config panels) ─────────────────────────
 
 local function makePanel(title, w, h)
 	local p=Instance.new("Frame",gui)
 	p.Size=UDim2.new(0,w,0,h)
-	p.BackgroundColor3=C.bg
-	p.BorderSizePixel=0
-	p.Visible=false
-	mkCorner(p,10)
-	mkStroke(p,C.border,1,0.4)
+	p.BackgroundColor3=C.bg; p.BorderSizePixel=0; p.Visible=false
+	mkCorner(p,10); mkStroke(p,C.border,1,0.4)
 
 	local blocker=Instance.new("TextButton",p)
-	blocker.Size=UDim2.new(1,0,1,0)
-	blocker.BackgroundTransparency=1
-	blocker.Text=""
-	blocker.ZIndex=1
-	blocker.AutoButtonColor=false
+	blocker.Size=UDim2.new(1,0,1,0); blocker.BackgroundTransparency=1
+	blocker.Text=""; blocker.ZIndex=1; blocker.AutoButtonColor=false
 
 	local hdr=Instance.new("Frame",p)
-	hdr.Size=UDim2.new(1,0,0,40)
-	hdr.BackgroundColor3=C.surface
-	hdr.BorderSizePixel=0
-	hdr.ZIndex=2
-	mkCorner(hdr,10)
+	hdr.Size=UDim2.new(1,0,0,40); hdr.BackgroundColor3=C.surface
+	hdr.BorderSizePixel=0; hdr.ZIndex=2; mkCorner(hdr,10)
 
 	local hpatch=Instance.new("Frame",hdr)
-	hpatch.Size=UDim2.new(1,0,0.5,0);hpatch.Position=UDim2.new(0,0,0.5,0)
-	hpatch.BackgroundColor3=C.surface;hpatch.BorderSizePixel=0;hpatch.ZIndex=2
+	hpatch.Size=UDim2.new(1,0,0.5,0); hpatch.Position=UDim2.new(0,0,0.5,0)
+	hpatch.BackgroundColor3=C.surface; hpatch.BorderSizePixel=0; hpatch.ZIndex=2
 
 	local pabar=Instance.new("Frame",hdr)
-	pabar.Size=UDim2.new(0,3,0,18);pabar.Position=UDim2.new(0,12,0.5,-9)
-	pabar.BackgroundColor3=C.accent;pabar.BorderSizePixel=0;pabar.ZIndex=3;mkCorner(pabar,2)
+	pabar.Size=UDim2.new(0,3,0,18); pabar.Position=UDim2.new(0,12,0.5,-9)
+	pabar.BackgroundColor3=C.accent; pabar.BorderSizePixel=0; pabar.ZIndex=3; mkCorner(pabar,2)
 
 	local tlbl=Instance.new("TextLabel",hdr)
-	tlbl.Size=UDim2.new(1,-60,1,0);tlbl.Position=UDim2.new(0,22,0,0)
-	tlbl.BackgroundTransparency=1;tlbl.Text=title
-	tlbl.TextColor3=C.white;tlbl.Font=Enum.Font.GothamBold;tlbl.TextSize=13
-	tlbl.TextXAlignment=Enum.TextXAlignment.Left;tlbl.ZIndex=3
+	tlbl.Size=UDim2.new(1,-60,1,0); tlbl.Position=UDim2.new(0,22,0,0)
+	tlbl.BackgroundTransparency=1; tlbl.Text=title
+	tlbl.TextColor3=C.white; tlbl.Font=Enum.Font.GothamBold; tlbl.TextSize=13
+	tlbl.TextXAlignment=Enum.TextXAlignment.Left; tlbl.ZIndex=3
 
 	local xBtn=Instance.new("TextButton",hdr)
-	xBtn.Size=UDim2.new(0,24,0,24);xBtn.Position=UDim2.new(1,-30,0.5,-12)
-	xBtn.BackgroundColor3=Color3.fromRGB(55,25,25)
-	xBtn.BorderSizePixel=0
-	xBtn.Text="X";xBtn.TextColor3=C.red
-	xBtn.Font=Enum.Font.GothamBold;xBtn.TextSize=12
-	xBtn.ZIndex=4;xBtn.AutoButtonColor=false
-	mkCorner(xBtn,5)
+	xBtn.Size=UDim2.new(0,24,0,24); xBtn.Position=UDim2.new(1,-30,0.5,-12)
+	xBtn.BackgroundColor3=Color3.fromRGB(55,25,25); xBtn.BorderSizePixel=0
+	xBtn.Text="X"; xBtn.TextColor3=C.red; xBtn.Font=Enum.Font.GothamBold; xBtn.TextSize=12
+	xBtn.ZIndex=4; xBtn.AutoButtonColor=false; mkCorner(xBtn,5)
 
 	draggable(hdr,p)
 
 	local allBtn=mkBtn(p,"All",C.surface,C.sub,10)
-	allBtn.Size=UDim2.new(0,40,0,20);allBtn.Position=UDim2.new(0,12,0,46)
-	allBtn.ZIndex=3
-	mkCorner(allBtn,5);mkStroke(allBtn,C.border,1,0.5)
+	allBtn.Size=UDim2.new(0,40,0,20); allBtn.Position=UDim2.new(0,12,0,46)
+	allBtn.ZIndex=3; mkCorner(allBtn,5); mkStroke(allBtn,C.border,1,0.5)
 
 	local noneBtn=mkBtn(p,"None",C.surface,C.sub,10)
-	noneBtn.Size=UDim2.new(0,44,0,20);noneBtn.Position=UDim2.new(0,56,0,46)
-	noneBtn.ZIndex=3
-	mkCorner(noneBtn,5);mkStroke(noneBtn,C.border,1,0.5)
+	noneBtn.Size=UDim2.new(0,44,0,20); noneBtn.Position=UDim2.new(0,56,0,46)
+	noneBtn.ZIndex=3; mkCorner(noneBtn,5); mkStroke(noneBtn,C.border,1,0.5)
 
 	local scroll=Instance.new("ScrollingFrame",p)
-	scroll.Size=UDim2.new(1,-8,1,-72);scroll.Position=UDim2.new(0,4,0,68)
-	scroll.BackgroundTransparency=1;scroll.BorderSizePixel=0
-	scroll.ScrollBarThickness=2;scroll.ScrollBarImageColor3=C.accent
-	scroll.CanvasSize=UDim2.new(0,0,0,0)
-	scroll.ZIndex=2
+	scroll.Size=UDim2.new(1,-8,1,-72); scroll.Position=UDim2.new(0,4,0,68)
+	scroll.BackgroundTransparency=1; scroll.BorderSizePixel=0
+	scroll.ScrollBarThickness=2; scroll.ScrollBarImageColor3=C.accent
+	scroll.CanvasSize=UDim2.new(0,0,0,0); scroll.ZIndex=2
 
 	local layout=Instance.new("UIListLayout",scroll)
-	layout.Padding=UDim.new(0,2);layout.SortOrder=Enum.SortOrder.LayoutOrder
+	layout.Padding=UDim.new(0,2); layout.SortOrder=Enum.SortOrder.LayoutOrder
 	local pad=Instance.new("UIPadding",scroll)
-	pad.PaddingLeft=UDim.new(0,6);pad.PaddingRight=UDim.new(0,6);pad.PaddingTop=UDim.new(0,4)
+	pad.PaddingLeft=UDim.new(0,6); pad.PaddingRight=UDim.new(0,6); pad.PaddingTop=UDim.new(0,4)
 
 	layout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
 		scroll.CanvasSize=UDim2.new(0,0,0,layout.AbsoluteContentSize.Y+8)
@@ -598,10 +941,8 @@ local function makePanel(title, w, h)
 
 	local function positionNextTo()
 		p.Position=UDim2.new(
-			win.Position.X.Scale,
-			win.Position.X.Offset+win.AbsoluteSize.X+8,
-			win.Position.Y.Scale,
-			win.Position.Y.Offset
+			win.Position.X.Scale, win.Position.X.Offset+win.AbsoluteSize.X+8,
+			win.Position.Y.Scale, win.Position.Y.Offset
 		)
 	end
 
@@ -630,31 +971,27 @@ for _,rarity in ipairs(RARITY_ORDER) do
 		end
 	end
 	if #group==0 then continue end
-
 	idx+=1
-	local hdr=Instance.new("Frame",seedScroll)
-	hdr.Size=UDim2.new(1,0,0,18);hdr.BackgroundTransparency=1;hdr.LayoutOrder=idx
-	local hl=mkLabel(hdr,rarity,RARITY_COLOR[rarity],9,Enum.Font.GothamBold)
+	local hdr2=Instance.new("Frame",seedScroll)
+	hdr2.Size=UDim2.new(1,0,0,18); hdr2.BackgroundTransparency=1; hdr2.LayoutOrder=idx
+	local hl=mkLabel(hdr2,rarity,RARITY_COLOR[rarity],9,Enum.Font.GothamBold)
 	hl.TextTransparency=0.2
 
 	for _,seed in ipairs(group) do
 		idx+=1
 		local row=Instance.new("Frame",seedScroll)
-		row.Size=UDim2.new(1,0,0,50);row.BackgroundColor3=C.surface
-		row.BorderSizePixel=0;row.LayoutOrder=idx
-		mkCorner(row,7)
+		row.Size=UDim2.new(1,0,0,50); row.BackgroundColor3=C.surface
+		row.BorderSizePixel=0; row.LayoutOrder=idx; mkCorner(row,7)
 
 		local nameL=mkLabel(row,seed.name,RARITY_COLOR[rarity],12,Enum.Font.GothamBold)
-		nameL.Size=UDim2.new(1,-50,0,22);nameL.Position=UDim2.new(0,10,0,5)
+		nameL.Size=UDim2.new(1,-50,0,22); nameL.Position=UDim2.new(0,10,0,5)
 
-		local infoL=mkLabel(row,
-			"Cost "..fmt(seed.cost).."  ·  "..seed.chance,
-			C.muted,9,Enum.Font.Gotham)
-		infoL.Size=UDim2.new(1,-50,0,14);infoL.Position=UDim2.new(0,10,0,27)
+		local infoL=mkLabel(row,"Cost "..fmt(seed.cost).."  ·  "..seed.chance,C.muted,9,Enum.Font.Gotham)
+		infoL.Size=UDim2.new(1,-50,0,14); infoL.Position=UDim2.new(0,10,0,27)
 		infoL.TextTruncate=Enum.TextTruncate.AtEnd
 
 		local ttrack,setT,getT=mkToggle(row)
-		ttrack.Size=UDim2.new(0,36,0,18);ttrack.Position=UDim2.new(1,-42,0.5,-9)
+		ttrack.Size=UDim2.new(0,36,0,18); ttrack.Position=UDim2.new(1,-42,0.5,-9)
 
 		ttrack.InputBegan:Connect(function(i)
 			if i.UserInputType==Enum.UserInputType.MouseButton1 then
@@ -676,12 +1013,12 @@ seedNone.MouseButton1Click:Connect(function()
 end)
 
 local function openSeed()
-	seedPanelOpen=true;seedPos();seedPanel.Visible=true
-	buyCfgBtn.BackgroundColor3=C.accent;buyCfgBtn.TextColor3=C.white
+	seedPanelOpen=true; seedPos(); seedPanel.Visible=true
+	buyCfgBtn.BackgroundColor3=C.accent; buyCfgBtn.TextColor3=C.white
 end
 local function closeSeed()
-	seedPanelOpen=false;seedPanel.Visible=false
-	buyCfgBtn.BackgroundColor3=C.surface;buyCfgBtn.TextColor3=C.sub
+	seedPanelOpen=false; seedPanel.Visible=false
+	buyCfgBtn.BackgroundColor3=C.surface; buyCfgBtn.TextColor3=C.sub
 end
 seedClose.MouseButton1Click:Connect(closeSeed)
 buyCfgBtn.MouseButton1Click:Connect(function() if seedPanelOpen then closeSeed() else openSeed() end end)
@@ -697,19 +1034,19 @@ local gi=0
 for _,item in ipairs(GearItems) do
 	gi+=1
 	local row=Instance.new("Frame",gearScroll)
-	row.Size=UDim2.new(1,0,0,50);row.BackgroundColor3=C.surface
-	row.BorderSizePixel=0;row.LayoutOrder=gi;mkCorner(row,7)
+	row.Size=UDim2.new(1,0,0,50); row.BackgroundColor3=C.surface
+	row.BorderSizePixel=0; row.LayoutOrder=gi; mkCorner(row,7)
 
 	local nL=mkLabel(row,item.name,C.white,12,Enum.Font.GothamBold)
-	nL.Size=UDim2.new(1,-50,0,22);nL.Position=UDim2.new(0,10,0,5)
+	nL.Size=UDim2.new(1,-50,0,22); nL.Position=UDim2.new(0,10,0,5)
 
 	local stockLbl=mkLabel(row,"",C.muted,9,Enum.Font.Gotham)
-	stockLbl.Size=UDim2.new(1,-50,0,14);stockLbl.Position=UDim2.new(0,10,0,27)
+	stockLbl.Size=UDim2.new(1,-50,0,14); stockLbl.Position=UDim2.new(0,10,0,27)
 	stockLbl.Text="Cost "..fmt(item.cost).."  ·  Max "..item.maxStock.."  ·  Checking..."
 	gearStockLabels[item.name]=stockLbl
 
 	local ttrack,setT,getT=mkToggle(row)
-	ttrack.Size=UDim2.new(0,36,0,18);ttrack.Position=UDim2.new(1,-42,0.5,-9)
+	ttrack.Size=UDim2.new(0,36,0,18); ttrack.Position=UDim2.new(1,-42,0.5,-9)
 
 	ttrack.InputBegan:Connect(function(i)
 		if i.UserInputType==Enum.UserInputType.MouseButton1 then
@@ -736,16 +1073,12 @@ end)
 
 local function openGear()
 	gearPanelOpen=true
-	gearPanel.Position=UDim2.new(
-		win.Position.X.Scale, win.Position.X.Offset+win.AbsoluteSize.X+8,
-		win.Position.Y.Scale, win.Position.Y.Offset+50
-	)
-	gearPanel.Visible=true
-	gearCfgBtn.BackgroundColor3=C.accent;gearCfgBtn.TextColor3=C.white
+	gearPanel.Position=UDim2.new(win.Position.X.Scale,win.Position.X.Offset+win.AbsoluteSize.X+8,win.Position.Y.Scale,win.Position.Y.Offset+50)
+	gearPanel.Visible=true; gearCfgBtn.BackgroundColor3=C.accent; gearCfgBtn.TextColor3=C.white
 end
 local function closeGear()
-	gearPanelOpen=false;gearPanel.Visible=false
-	gearCfgBtn.BackgroundColor3=C.surface;gearCfgBtn.TextColor3=C.sub
+	gearPanelOpen=false; gearPanel.Visible=false
+	gearCfgBtn.BackgroundColor3=C.surface; gearCfgBtn.TextColor3=C.sub
 end
 gearClose2.MouseButton1Click:Connect(closeGear)
 gearCfgBtn.MouseButton1Click:Connect(function() if gearPanelOpen then closeGear() else openGear() end end)
@@ -760,17 +1093,17 @@ local ei=0
 for _,item in ipairs(EggItems) do
 	ei+=1
 	local row=Instance.new("Frame",eggScroll)
-	row.Size=UDim2.new(1,0,0,50);row.BackgroundColor3=C.surface
-	row.BorderSizePixel=0;row.LayoutOrder=ei;mkCorner(row,7)
+	row.Size=UDim2.new(1,0,0,50); row.BackgroundColor3=C.surface
+	row.BorderSizePixel=0; row.LayoutOrder=ei; mkCorner(row,7)
 
 	local nL=mkLabel(row,item.name,C.white,12,Enum.Font.GothamBold)
-	nL.Size=UDim2.new(1,-50,0,22);nL.Position=UDim2.new(0,10,0,5)
+	nL.Size=UDim2.new(1,-50,0,22); nL.Position=UDim2.new(0,10,0,5)
 
 	local infoL=mkLabel(row,"Cost "..fmt(item.cost),C.muted,9,Enum.Font.Gotham)
-	infoL.Size=UDim2.new(1,-50,0,14);infoL.Position=UDim2.new(0,10,0,27)
+	infoL.Size=UDim2.new(1,-50,0,14); infoL.Position=UDim2.new(0,10,0,27)
 
 	local ttrack,setT,getT=mkToggle(row)
-	ttrack.Size=UDim2.new(0,36,0,18);ttrack.Position=UDim2.new(1,-42,0.5,-9)
+	ttrack.Size=UDim2.new(0,36,0,18); ttrack.Position=UDim2.new(1,-42,0.5,-9)
 
 	ttrack.InputBegan:Connect(function(i)
 		if i.UserInputType==Enum.UserInputType.MouseButton1 then
@@ -798,74 +1131,64 @@ end)
 
 local function openEgg()
 	eggPanelOpen=true
-	eggPanel.Position=UDim2.new(
-		win.Position.X.Scale, win.Position.X.Offset+win.AbsoluteSize.X+8,
-		win.Position.Y.Scale, win.Position.Y.Offset+100
-	)
-	eggPanel.Visible=true
-	eggCfgBtn.BackgroundColor3=C.accent;eggCfgBtn.TextColor3=C.white
+	eggPanel.Position=UDim2.new(win.Position.X.Scale,win.Position.X.Offset+win.AbsoluteSize.X+8,win.Position.Y.Scale,win.Position.Y.Offset+100)
+	eggPanel.Visible=true; eggCfgBtn.BackgroundColor3=C.accent; eggCfgBtn.TextColor3=C.white
 end
 local function closeEgg()
-	eggPanelOpen=false;eggPanel.Visible=false
-	eggCfgBtn.BackgroundColor3=C.surface;eggCfgBtn.TextColor3=C.sub
+	eggPanelOpen=false; eggPanel.Visible=false
+	eggCfgBtn.BackgroundColor3=C.surface; eggCfgBtn.TextColor3=C.sub
 end
 eggClose.MouseButton1Click:Connect(closeEgg)
 eggCfgBtn.MouseButton1Click:Connect(function() if eggPanelOpen then closeEgg() else openEgg() end end)
 
--- ─── Apply Loaded Settings to UI ─────────────────────────────────────────────
+-- ─── Load Settings → Apply to UI ─────────────────────────────────────────────
 
 loadSettings()
-
 if autoRollEnabled then setRoll(true) end
 if autoBuyEnabled  then setBuy(true)  end
 if autoGearEnabled then setGear(true) end
 if autoFertEnabled then setFert(true) end
 if autoSellEnabled then setSell(true) end
-if autoEggEnabled then setEgg(true) end
-
-for name in pairs(autoEggList) do if eggToggles[name] then eggToggles[name].set(true) end end
+if autoEggEnabled  then setEgg(true)  end
+for name in pairs(autoEggList) do if eggToggles[name]  then eggToggles[name].set(true)  end end
 for name in pairs(autoBuyList) do if seedToggles[name] then seedToggles[name].set(true) end end
 for name in pairs(gearBuyList) do if gearToggles[name] then gearToggles[name].set(true) end end
 setStatus()
+if autoCollectEnabled then setCollect(true); setEvStatus() end
+
+-- Initial tab
+switchTab("Farming")
 
 -- ─── Toggle Handlers ─────────────────────────────────────────────────────────
 
 rollTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoRollEnabled=not getRoll();setRoll(autoRollEnabled);setStatus();saveSettings()
+	autoRollEnabled=not getRoll(); setRoll(autoRollEnabled); setStatus(); saveSettings()
 end)
 eggTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoEggEnabled=not getEgg();setEgg(autoEggEnabled);setStatus();saveSettings()
+	autoEggEnabled=not getEgg(); setEgg(autoEggEnabled); setStatus(); saveSettings()
 end)
 buyTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoBuyEnabled=not getBuy();setBuy(autoBuyEnabled);setStatus();saveSettings()
+	autoBuyEnabled=not getBuy(); setBuy(autoBuyEnabled); setStatus(); saveSettings()
 end)
 gearTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoGearEnabled=not getGear();setGear(autoGearEnabled);setStatus();saveSettings()
+	autoGearEnabled=not getGear(); setGear(autoGearEnabled); setStatus(); saveSettings()
 end)
-
 sellTrack.InputBegan:Connect(function(i)
 	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoSellEnabled=not getSell();setSell(autoSellEnabled);setStatus();saveSettings()
+	autoSellEnabled=not getSell(); setSell(autoSellEnabled); setStatus(); saveSettings()
+end)
+fertTrack.InputBegan:Connect(function(i)
+	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
+	autoFertEnabled=not getFert(); setFert(autoFertEnabled); setStatus()
+	if autoFertEnabled then task.spawn(function() runAutoFert() end) end
+	saveSettings()
 end)
 
 -- ─── Gear Stock Polling ──────────────────────────────────────────────────────
-
-local function getStockLabel(itemName)
-	local pg = player:FindFirstChild("PlayerGui")
-	if not pg then return nil end
-	local frame = pg:FindFirstChild("MainUI")
-		and pg.MainUI:FindFirstChild("Menus")
-		and pg.MainUI.Menus:FindFirstChild("GearShopFrame")
-		and pg.MainUI.Menus.GearShopFrame:FindFirstChild("ScrollingFrame")
-		and pg.MainUI.Menus.GearShopFrame.ScrollingFrame:FindFirstChild(itemName)
-	if not frame then return nil end
-	local img = frame:FindFirstChild("GearImage")
-	return img and img:FindFirstChild("Rarity")
-end
 
 local function parseStock(lbl)
 	if not lbl then return 0 end
@@ -876,7 +1199,7 @@ local function updateStockLabel(name, stock)
 	gearStock[name] = stock
 	if not gearStockLabels[name] then return end
 	local item
-	for _,g in ipairs(GearItems) do if g.name==name then item=g;break end end
+	for _,g in ipairs(GearItems) do if g.name==name then item=g; break end end
 	if not item then return end
 	local stockStr = stock > 0 and ("In Stock: "..stock) or "Out of Stock"
 	gearStockLabels[name].Text = "Cost "..fmt(item.cost).."  ·  "..stockStr
@@ -893,28 +1216,18 @@ end
 
 local function watchGearShop()
 	local pg = player:WaitForChild("PlayerGui")
-	local scroll = pg:WaitForChild("MainUI")
-		:WaitForChild("Menus")
-		:WaitForChild("GearShopFrame")
-		:WaitForChild("ScrollingFrame")
-
+	local scroll = pg:WaitForChild("MainUI"):WaitForChild("Menus"):WaitForChild("GearShopFrame"):WaitForChild("ScrollingFrame")
 	for _, item in ipairs(GearItems) do
 		local itemFrame = scroll:FindFirstChild(item.name)
 		if not itemFrame then continue end
-		local stockLbl = itemFrame:FindFirstChild("GearImage")
-			and itemFrame.GearImage:FindFirstChild("Rarity")
+		local stockLbl = itemFrame:FindFirstChild("GearImage") and itemFrame.GearImage:FindFirstChild("Rarity")
 		if not stockLbl then continue end
-
 		updateStockLabel(item.name, parseStock(stockLbl))
-
 		stockLbl:GetPropertyChangedSignal("Text"):Connect(function()
 			local newStock = parseStock(stockLbl)
 			updateStockLabel(item.name, newStock)
 			if autoGearEnabled and gearBuyList[item.name] and newStock > 0 then
-				task.spawn(function()
-					task.wait(0.3)
-					buyGearItem(item)
-				end)
+				task.spawn(function() task.wait(0.3); buyGearItem(item) end)
 			end
 		end)
 	end
@@ -922,97 +1235,47 @@ end
 
 task.spawn(watchGearShop)
 
--- ─── Toast Notification ──────────────────────────────────────────────────────
+-- ─── Toast ───────────────────────────────────────────────────────────────────
 
 local toastFrame = Instance.new("Frame", gui)
-toastFrame.Size = UDim2.new(0, 320, 0, 60)
-toastFrame.Position = UDim2.new(0.5, -160, 0.42, 0)
-toastFrame.BackgroundColor3 = Color3.fromRGB(45, 48, 55)
+toastFrame.Size = UDim2.new(0,320,0,60)
+toastFrame.Position = UDim2.new(0.5,-160,0.42,0)
+toastFrame.BackgroundColor3 = Color3.fromRGB(45,48,55)
 toastFrame.BackgroundTransparency = 1
 toastFrame.BorderSizePixel = 0
 toastFrame.Visible = false
+mkCorner(toastFrame,6); mkStroke(toastFrame,Color3.fromRGB(85,90,100),2,0)
 
-mkCorner(toastFrame, 6)
-mkStroke(toastFrame, Color3.fromRGB(85, 90, 100), 2, 0)
+local grad=Instance.new("UIGradient")
+grad.Color=ColorSequence.new{ColorSequenceKeypoint.new(0,Color3.fromRGB(58,62,70)),ColorSequenceKeypoint.new(1,Color3.fromRGB(42,45,52))}
+grad.Rotation=90; grad.Parent=toastFrame
 
-local gradient = Instance.new("UIGradient")
-gradient.Color = ColorSequence.new{
-	ColorSequenceKeypoint.new(0, Color3.fromRGB(58, 62, 70)),
-	ColorSequenceKeypoint.new(1, Color3.fromRGB(42, 45, 52))
-}
-gradient.Rotation = 90
-gradient.Parent = toastFrame
+local toastSeedName=Instance.new("TextLabel",toastFrame)
+toastSeedName.Size=UDim2.new(1,-20,0,28); toastSeedName.Position=UDim2.new(0,10,0,8)
+toastSeedName.BackgroundTransparency=1; toastSeedName.Font=Enum.Font.GothamBlack
+toastSeedName.TextSize=22; toastSeedName.TextXAlignment=Enum.TextXAlignment.Center; toastSeedName.TextTransparency=1
 
-local toastSeedName = Instance.new("TextLabel", toastFrame)
-toastSeedName.Size = UDim2.new(1, -20, 0, 28)
-toastSeedName.Position = UDim2.new(0, 10, 0, 8)
-toastSeedName.BackgroundTransparency = 1
-toastSeedName.Font = Enum.Font.GothamBlack
-toastSeedName.TextSize = 22
-toastSeedName.TextXAlignment = Enum.TextXAlignment.Center
-toastSeedName.TextTransparency = 1
+local toastSub=Instance.new("TextLabel",toastFrame)
+toastSub.Size=UDim2.new(1,-20,0,16); toastSub.Position=UDim2.new(0,10,0,36)
+toastSub.BackgroundTransparency=1; toastSub.Text="SEED PURCHASED"
+toastSub.TextColor3=Color3.fromRGB(190,190,190); toastSub.Font=Enum.Font.GothamMedium
+toastSub.TextSize=13; toastSub.TextXAlignment=Enum.TextXAlignment.Center; toastSub.TextTransparency=1
 
-local toastSub = Instance.new("TextLabel", toastFrame)
-toastSub.Size = UDim2.new(1, -20, 0, 16)
-toastSub.Position = UDim2.new(0, 10, 0, 36)
-toastSub.BackgroundTransparency = 1
-toastSub.Text = "SEED PURCHASED"
-toastSub.TextColor3 = Color3.fromRGB(190, 190, 190)
-toastSub.Font = Enum.Font.GothamMedium
-toastSub.TextSize = 13
-toastSub.TextXAlignment = Enum.TextXAlignment.Center
-toastSub.TextTransparency = 1
-
-local toastActive = false
-
+local toastActive=false
 local function showToast(seedName)
-	local seed = SeedByName[seedName]
-	local col = seed and RARITY_COLOR[seed.rarity] or C.white
-
-	toastSeedName.Text = seedName
-	toastSeedName.TextColor3 = col
-
-	toastFrame.Visible = true
-	toastActive = true
-
-	local s = toastFrame:FindFirstChildWhichIsA("UIStroke")
-	if s then
-		s.Color = col
-	end
-
-	local fadeIn = TweenInfo.new(0.3, Enum.EasingStyle.Quad)
-
-	TweenService:Create(toastFrame, fadeIn, {
-		BackgroundTransparency = 0
-	}):Play()
-
-	TweenService:Create(toastSeedName, fadeIn, {
-		TextTransparency = 0
-	}):Play()
-
-	TweenService:Create(toastSub, fadeIn, {
-		TextTransparency = 0
-	}):Play()
-
-	task.delay(2.2, function()
-		local fadeOut = TweenInfo.new(0.4, Enum.EasingStyle.Quad)
-
-		TweenService:Create(toastFrame, fadeOut, {
-			BackgroundTransparency = 1
-		}):Play()
-
-		TweenService:Create(toastSeedName, fadeOut, {
-			TextTransparency = 1
-		}):Play()
-
-		TweenService:Create(toastSub, fadeOut, {
-			TextTransparency = 1
-		}):Play()
-
-		task.wait(0.5)
-
-		toastFrame.Visible = false
-		toastActive = false
+	local seed=SeedByName[seedName]; local col=seed and RARITY_COLOR[seed.rarity] or C.white
+	toastSeedName.Text=seedName; toastSeedName.TextColor3=col; toastFrame.Visible=true; toastActive=true
+	local s=toastFrame:FindFirstChildWhichIsA("UIStroke"); if s then s.Color=col end
+	local fi=TweenInfo.new(0.3,Enum.EasingStyle.Quad)
+	TweenService:Create(toastFrame,fi,{BackgroundTransparency=0}):Play()
+	TweenService:Create(toastSeedName,fi,{TextTransparency=0}):Play()
+	TweenService:Create(toastSub,fi,{TextTransparency=0}):Play()
+	task.delay(2.2,function()
+		local fo=TweenInfo.new(0.4,Enum.EasingStyle.Quad)
+		TweenService:Create(toastFrame,fo,{BackgroundTransparency=1}):Play()
+		TweenService:Create(toastSeedName,fo,{TextTransparency=1}):Play()
+		TweenService:Create(toastSub,fo,{TextTransparency=1}):Play()
+		task.wait(0.5); toastFrame.Visible=false; toastActive=false
 	end)
 end
 
@@ -1022,34 +1285,21 @@ RollSeeds.OnClientEvent:Connect(function(rolledSeeds)
 	if not autoBuyEnabled then return end
 	if buyLock then return end
 	if type(rolledSeeds)~="table" then return end
-
 	local queue={}
-	local cash = player:WaitForChild("leaderstats"):FindFirstChild("Cash")
-	local balance = parseCash(cash and cash.Value or 0)
-
+	local cash=player:WaitForChild("leaderstats"):FindFirstChild("Cash")
+	local balance=parseCash(cash and cash.Value or 0)
 	for slotIndex, seedName in ipairs(rolledSeeds) do
-		if type(seedName) == "string" and autoBuyList[seedName] then
-			local seed = SeedByName[seedName]
-			local cost = seed and tonumber(seed.cost)
-			if cost and balance >= cost then
-				table.insert(queue, {slot=slotIndex, name=seedName})
-				balance -= cost
-			end
+		if type(seedName)=="string" and autoBuyList[seedName] then
+			local seed=SeedByName[seedName]; local cost=seed and tonumber(seed.cost)
+			if cost and balance>=cost then table.insert(queue,{slot=slotIndex,name=seedName}); balance-=cost end
 		end
 	end
-
 	if #queue==0 then return end
-
-	buyLock=true;isBuying=true
+	buyLock=true; isBuying=true
 	task.spawn(function()
 		task.wait(0.2)
-		for _,entry in ipairs(queue) do
-			BuySeed:FireServer(entry.slot)
-			showToast(entry.name)
-			task.wait(0.8)
-		end
-		task.wait(0.5)
-		isBuying=false;buyLock=false
+		for _,entry in ipairs(queue) do BuySeed:FireServer(entry.slot); showToast(entry.name); task.wait(0.8) end
+		task.wait(0.5); isBuying=false; buyLock=false
 	end)
 end)
 
@@ -1059,62 +1309,46 @@ task.spawn(function()
 	while true do
 		task.wait(2)
 		if not autoGearEnabled then continue end
-		for _, item in ipairs(GearItems) do
+		for _,item in ipairs(GearItems) do
 			if not gearBuyList[item.name] then continue end
-			if (gearStock[item.name] or 0) > 0 then
-				buyGearItem(item)
-			end
+			if (gearStock[item.name] or 0) > 0 then buyGearItem(item) end
 		end
 	end
 end)
 
-local function buyEgg(eggName)
-	local petMerchant = workspace:FindFirstChild("PetMerchant")
-	if not petMerchant then return false end
+-- ─── Auto Egg ────────────────────────────────────────────────────────────────
 
-	for i = 1, 5 do
-		local lever = petMerchant:FindFirstChild("Podium"..i.."Lever")
+local function buyEgg(eggName)
+	local petMerchant=workspace:FindFirstChild("PetMerchant")
+	if not petMerchant then return false end
+	for i=1,5 do
+		local lever=petMerchant:FindFirstChild("Podium"..i.."Lever")
 		if not lever then continue end
-		local prompt = lever:FindFirstChild("PromptAttachment")
-			and lever.PromptAttachment:FindFirstChild("EggShopPrompt")
+		local prompt=lever:FindFirstChild("PromptAttachment") and lever.PromptAttachment:FindFirstChild("EggShopPrompt")
 		if not prompt then continue end
 		if not prompt.ObjectText:find(eggName) then continue end
-		if prompt.ActionText ~= "Buy Egg" then continue end
-
-		local char = player.Character
-		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		if prompt.ActionText~="Buy Egg" then continue end
+		local char=player.Character; local hrp=char and char:FindFirstChild("HumanoidRootPart")
 		if not hrp then return false end
-		local origPos = hrp.CFrame
-
-		local leverPart = lever:FindFirstChildWhichIsA("BasePart", true)
+		local origPos=hrp.CFrame
+		local leverPart=lever:FindFirstChildWhichIsA("BasePart",true)
 		if not leverPart then return false end
-
-		hrp.CFrame = leverPart.CFrame * CFrame.new(0, 0, 3)
-		task.wait(0.3)
-		fireproximityprompt(prompt)
-		task.wait(0.2)
-		hrp.CFrame = origPos
-
+		hrp.CFrame=leverPart.CFrame*CFrame.new(0,0,3)
+		task.wait(0.3); fireproximityprompt(prompt); task.wait(0.2); hrp.CFrame=origPos
 		return true
 	end
 	return false
 end
 
--- ─── Auto Egg Loop ────────────────────────────────────────────────────────────
-
 task.spawn(function()
 	while true do
 		task.wait(2)
 		if not autoEggEnabled then continue end
-		local cash = player:WaitForChild("leaderstats"):FindFirstChild("Cash")
-		local balance = parseCash(cash and cash.Value or 0)
-		for _, item in ipairs(EggItems) do
+		local cash=player:WaitForChild("leaderstats"):FindFirstChild("Cash")
+		local balance=parseCash(cash and cash.Value or 0)
+		for _,item in ipairs(EggItems) do
 			if not autoEggList[item.name] then continue end
-			if balance >= item.cost then
-				buyEgg(item.name)
-				balance -= item.cost
-				task.wait(0.5)
-			end
+			if balance>=item.cost then buyEgg(item.name); balance-=item.cost; task.wait(0.5) end
 		end
 	end
 end)
@@ -1124,51 +1358,33 @@ end)
 local UseFertilizer = Remotes:WaitForChild("UseFertilizer")
 
 local MUTATION_RANK = {
-	Fire=10, Bubblegum=9, Cosmic=8, Rainbow=7, Radioactive=6,
-	Void=5, Autumn=4, Frozen=3, Wet=2, Acid=1, Normal=0, Farm=0
+	Fire=10,Bubblegum=9,Cosmic=8,Rainbow=7,Radioactive=6,
+	Void=5,Autumn=4,Frozen=3,Wet=2,Acid=1,Normal=0,Farm=0
 }
-
-local floorMultipliers = {}
-local harvestedData = {}
-local plantsData = {}
+local floorMultipliers={}
+local harvestedData={}
+local plantsData={}
 
 local function loadGCPlantData()
-	local ok, gc = pcall(getgc, true)
+	local ok,gc=pcall(getgc,true)
 	if not ok then return end
-	local seen = {}
-	for _, obj in ipairs(gc) do
-		if type(obj) ~= "table" or seen[obj] then continue end
-		seen[obj] = true
+	local seen={}
+	for _,obj in ipairs(gc) do
+		if type(obj)~="table" or seen[obj] then continue end
+		seen[obj]=true
 		pcall(function()
-			if type(obj.Name)=="string" and type(obj.Level)=="number" and
-				type(obj.Mutation)=="string" and type(obj.EarningsMultiplier)=="number" and
-				type(obj.FloorKey)=="string" then
-				local fk = obj.FloorKey
-				if not floorMultipliers[fk] then floorMultipliers[fk] = obj.EarningsMultiplier end
-				local key = obj.Name.."|"..fk.."|"..obj.Mutation
+			if type(obj.Name)=="string" and type(obj.Level)=="number" and type(obj.Mutation)=="string" and type(obj.EarningsMultiplier)=="number" and type(obj.FloorKey)=="string" then
+				local fk=obj.FloorKey
+				if not floorMultipliers[fk] then floorMultipliers[fk]=obj.EarningsMultiplier end
+				local key=obj.Name.."|"..fk.."|"..obj.Mutation
 				if not harvestedData[key] then
-					harvestedData[key] = {
-						mult     = obj.EarningsMultiplier,
-						level    = tonumber(obj.Level) or 1,   -- already doing tonumber here
-						mutation = obj.Mutation,
-						name     = obj.Name,
-						floor    = fk
-					}
+					harvestedData[key]={mult=obj.EarningsMultiplier,level=tonumber(obj.Level) or 1,mutation=obj.Mutation,name=obj.Name,floor=fk}
 				end
 			end
-			if type(obj.PlantName)=="string" and type(obj.PlantLevel)=="number" and
-				type(obj.PlantMutation)=="string" then
-				local entry = {
-					name = obj.PlantName,
-					level = obj.PlantLevel,
-					mutation = obj.PlantMutation,
-					stage = obj.PlantStage or 0,
-					maxStages = obj.PlantMaxStages or 1,
-					fullyGrown = obj.PlantFullyGrown or false,
-					fertBoost = obj.FertilizerBoostRemaining or 0,
-				}
-				local pk = obj.PlantName.."|"..obj.PlantMutation.."|"..(obj.PlantLevel or 0)
-				if not plantsData[pk] then plantsData[pk] = entry end
+			if type(obj.PlantName)=="string" and type(obj.PlantLevel)=="number" and type(obj.PlantMutation)=="string" then
+				local entry={name=obj.PlantName,level=obj.PlantLevel,mutation=obj.PlantMutation,stage=obj.PlantStage or 0,maxStages=obj.PlantMaxStages or 1,fullyGrown=obj.PlantFullyGrown or false,fertBoost=obj.FertilizerBoostRemaining or 0}
+				local pk=obj.PlantName.."|"..obj.PlantMutation.."|"..(obj.PlantLevel or 0)
+				if not plantsData[pk] then plantsData[pk]=entry end
 			end
 		end)
 	end
@@ -1177,206 +1393,155 @@ end
 task.spawn(loadGCPlantData)
 
 local function getFertilizers()
-	local list = {}
-	local backpack = player:WaitForChild("Backpack")
-	for _, tool in ipairs(backpack:GetChildren()) do
-		local boost = tool:GetAttribute("Boost")
-		local key   = tool:GetAttribute("gearKey")
-		if boost and key and key:lower():find("fertilizer") then
-			table.insert(list, {key=key, boost=boost})
-		end
+	local list={}; local backpack=player:WaitForChild("Backpack")
+	for _,tool in ipairs(backpack:GetChildren()) do
+		local boost=tool:GetAttribute("Boost"); local key=tool:GetAttribute("gearKey")
+		if boost and key and key:lower():find("fertilizer") then table.insert(list,{key=key,boost=boost}) end
 	end
-	table.sort(list, function(a,b) return a.boost > b.boost end)
+	table.sort(list,function(a,b) return a.boost>b.boost end)
 	return list
 end
 
 local function getFloorKey(dirtPath)
-	local floor = dirtPath:match("(Floor%d+)%.FarmPlot")
-	return floor or "Floor1"
+	return dirtPath:match("(Floor%d+)%.FarmPlot") or "Floor1"
 end
 
 local function scoreDirt(dirtPart)
-	local plantName = nil
-	local plantCount = 0
-	for _, child in ipairs(dirtPart:GetChildren()) do
-		if child:IsA("Model") then
-			if not plantName then plantName = child.Name end
-			plantCount += 1
+	local plantName=nil; local plantCount=0
+	for _,child in ipairs(dirtPart:GetChildren()) do
+		if child:IsA("Model") then if not plantName then plantName=child.Name end; plantCount+=1 end
+	end
+	if not plantName or plantCount==0 then return nil end
+	local seed=SeedByName[plantName]; local baseIncome=(seed and seed.income) or 1
+	local floorKey=getFloorKey(dirtPart:GetFullName()); local floorMult=floorMultipliers[floorKey] or 1
+	local bestScore=0
+	for key,entry in pairs(harvestedData) do
+		if entry.name==plantName and entry.floor==floorKey then
+			local mutRank=MUTATION_RANK[entry.mutation] or 0; local level=tonumber(entry.level) or 1
+			local mult=tonumber(entry.mult) or 1
+			local s=baseIncome*mult*(1+mutRank*0.15)*(1+(level-50)*0.01)
+			if s>bestScore then bestScore=s end
 		end
 	end
-	if not plantName or plantCount == 0 then return nil end
-
-	local seed = SeedByName[plantName]
-	local baseIncome = (seed and seed.income) or 1
-	local floorKey = getFloorKey(dirtPart:GetFullName())
-	local floorMult = floorMultipliers[floorKey] or 1
-
-	local bestScore = 0
-	for key, entry in pairs(harvestedData) do
-		if entry.name == plantName and entry.floor == floorKey then
-			local mutRank = MUTATION_RANK[entry.mutation] or 0
-			local level = tonumber(entry.level) or 1
-			local mult = tonumber(entry.mult) or 1
-			local s = baseIncome * mult * (1 + mutRank * 0.15) * (1 + (level - 50) * 0.01)
-			if s > bestScore then bestScore = s end
-		end
-	end
-
-	if bestScore == 0 then bestScore = baseIncome * floorMult end
-	return bestScore, plantName, plantCount
+	if bestScore==0 then bestScore=baseIncome*floorMult end
+	return bestScore,plantName,plantCount
 end
 
 local function getPlantedDirts()
-	local ok, plotName = pcall(function()
-		local plotRemote = Remotes:FindFirstChild("Plot")
-		if not plotRemote then print("Plot remote NOT FOUND") return nil end
-		local getPlot = plotRemote:FindFirstChild("GetPlot")
-		if not getPlot then
-			print("GetPlot NOT FOUND, Plot children:")
-			for _, v in ipairs(plotRemote:GetChildren()) do print(" ->", v.Name) end
-			return nil
-		end
-		return getPlot:InvokeServer()
-	end)
-	if not ok or not plotName then return {} end
-
-	-- rest of function unchanged...
-
-	local plotModel = workspace:FindFirstChild("Map")
-		and workspace.Map:FindFirstChild("Plots")
-		and workspace.Map.Plots:FindFirstChild(tostring(plotName))
+	local plotModel = getHomePlot()
 	if not plotModel then return {} end
-
-	local seenInstances = {}
-	local dirts = {}
-
-	for _, obj in ipairs(plotModel:GetDescendants()) do
-		if obj.Name == "Dirt" and obj:IsA("BasePart") and not seenInstances[obj] then
-			local parentName = obj.Parent and obj.Parent.Name or ""
+	local seenInstances={}; local dirts={}
+	for _,obj in ipairs(plotModel:GetDescendants()) do
+		if obj.Name=="Dirt" and obj:IsA("BasePart") and not seenInstances[obj] then
+			local parentName=obj.Parent and obj.Parent.Name or ""
 			if not parentName:match("^Plot%d+$") then continue end
-			seenInstances[obj] = true
-
-			local floorKey = obj:GetFullName():match("(Floor%d+)%.FarmPlot") or "Floor1"
-			local score, plantName, plantCount = scoreDirt(obj)
-			if score and plantName then
-				table.insert(dirts, {part=obj, plant=plantName, score=score, count=plantCount, floor=floorKey})
-			end
+			seenInstances[obj]=true
+			local floorKey=obj:GetFullName():match("(Floor%d+)%.FarmPlot") or "Floor1"
+			local score,plantName,plantCount=scoreDirt(obj)
+			if score and plantName then table.insert(dirts,{part=obj,plant=plantName,score=score,count=plantCount,floor=floorKey}) end
 		end
 	end
-
-	table.sort(dirts, function(a,b) return a.score > b.score end)
+	table.sort(dirts,function(a,b) return a.score>b.score end)
 	return dirts
 end
 
 local function getFertTool(key)
-	local char = player.Character
-	local backpack = player:WaitForChild("Backpack")
-	for _, t in ipairs(backpack:GetChildren()) do
-		if t:GetAttribute("gearKey") == key then return t end
-	end
-	if char then
-		for _, t in ipairs(char:GetChildren()) do
-			if t:IsA("Tool") and t:GetAttribute("gearKey") == key then return t end
-		end
-	end
+	local char=player.Character; local backpack=player:WaitForChild("Backpack")
+	for _,t in ipairs(backpack:GetChildren()) do if t:GetAttribute("gearKey")==key then return t end end
+	if char then for _,t in ipairs(char:GetChildren()) do if t:IsA("Tool") and t:GetAttribute("gearKey")==key then return t end end end
 	return nil
 end
 
 local function runAutoFert()
-	local dirts = getPlantedDirts()
-	if #dirts == 0 then return end
-	local ferts = getFertilizers()
-	if #ferts == 0 then return end
-
-	local char = player.Character
-	local equippedKey = nil
-
-	for _, dirt in ipairs(dirts) do
-		local fert = nil
-		for _, f in ipairs(ferts) do
-			if getFertTool(f.key) then fert = f; break end
-		end
+	local dirts=getPlantedDirts(); if #dirts==0 then return end
+	local ferts=getFertilizers(); if #ferts==0 then return end
+	local char=player.Character; local equippedKey=nil
+	for _,dirt in ipairs(dirts) do
+		local fert=nil
+		for _,f in ipairs(ferts) do if getFertTool(f.key) then fert=f; break end end
 		if not fert then break end
-
-		if equippedKey ~= fert.key then
-			local tool = getFertTool(fert.key)
-			if tool and char then
-				tool.Parent = char
-				task.wait(0.25)
-			end
-			equippedKey = fert.key
+		if equippedKey~=fert.key then
+			local tool=getFertTool(fert.key)
+			if tool and char then tool.Parent=char; task.wait(0.25) end
+			equippedKey=fert.key
 		end
-
-		local tool = getFertTool(fert.key)
-		if not tool then equippedKey = nil; continue end
-
-		pcall(function() UseFertilizer:FireServer(dirt.part) end)
-		task.wait(0.4)
+		local tool=getFertTool(fert.key)
+		if not tool then equippedKey=nil; continue end
+		pcall(function() UseFertilizer:FireServer(dirt.part) end); task.wait(0.4)
 	end
-
 	if char then
-		for _, t in ipairs(char:GetChildren()) do
-			if t:IsA("Tool") and t:GetAttribute("gearKey") then
-				t.Parent = player:WaitForChild("Backpack")
-			end
+		for _,t in ipairs(char:GetChildren()) do
+			if t:IsA("Tool") and t:GetAttribute("gearKey") then t.Parent=player:WaitForChild("Backpack") end
 		end
 	end
 end
 
--- ─── Auto Fert Loop ──────────────────────────────────────────────────────────
-
 task.spawn(function()
-	while true do
-		task.wait(300)
-		if autoFertEnabled then runAutoFert() end
-	end
+	while true do task.wait(300); if autoFertEnabled then runAutoFert() end end
 end)
-
--- ─── Fert Inventory Watcher ──────────────────────────────────────────────────
 
 player:WaitForChild("Backpack").ChildAdded:Connect(function(child)
 	if not autoFertEnabled then return end
-	local key = child:GetAttribute("gearKey")
-	if key and key:lower():find("fertilizer") then
-		task.wait(0.5)
-		task.spawn(runAutoFert)
-	end
+	local key=child:GetAttribute("gearKey")
+	if key and key:lower():find("fertilizer") then task.wait(0.5); task.spawn(runAutoFert) end
 end)
-
--- (runAutoFert function ends here)
-
-fertTrack.InputBegan:Connect(function(i)
-	if i.UserInputType~=Enum.UserInputType.MouseButton1 then return end
-	autoFertEnabled=not getFert();setFert(autoFertEnabled);setStatus()
-	if autoFertEnabled then task.spawn(function() runAutoFert() end) end
-	saveSettings()
-end)
-
--- ─── Auto Fert Loop ──────────────────────────────────────────────────────────
 
 -- ─── Auto Roll Loop ──────────────────────────────────────────────────────────
 
-local ROLL_INTERVAL = 1
-local lastRoll = 0
-
+local ROLL_INTERVAL=1; local lastRoll=0
 RunService.Heartbeat:Connect(function()
 	if not autoRollEnabled or isBuying then return end
-	local now = tick()
-	if now - lastRoll >= ROLL_INTERVAL then
-		lastRoll = now
-		RollSeeds:FireServer()
-	end
+	local now=tick()
+	if now-lastRoll>=ROLL_INTERVAL then lastRoll=now; RollSeeds:FireServer() end
 end)
 
 -- ─── Auto Sell Loop ──────────────────────────────────────────────────────────
 
-local SELL_INTERVAL = 1
-
 task.spawn(function()
-	while true do
-		task.wait(SELL_INTERVAL)
-		if autoSellEnabled then
-			pcall(function() SellRemote:FireServer() end)
+	while true do task.wait(1); if autoSellEnabled then pcall(function() SellRemote:FireServer() end) end end
+end)
+
+-- ─── Close Button ────────────────────────────────────────────────────────────
+
+local closeBtn=Instance.new("TextButton",header)
+closeBtn.Size=UDim2.new(0,26,0,26); closeBtn.Position=UDim2.new(1,-34,0.5,-13)
+closeBtn.BackgroundColor3=Color3.fromRGB(55,25,25); closeBtn.BorderSizePixel=0
+closeBtn.Text="X"; closeBtn.TextColor3=C.red; closeBtn.Font=Enum.Font.GothamBold
+closeBtn.TextSize=13; closeBtn.ZIndex=5; closeBtn.AutoButtonColor=false
+mkCorner(closeBtn,6); mkStroke(closeBtn,C.red,1,0.6)
+
+closeBtn.MouseEnter:Connect(function()
+	TweenService:Create(closeBtn,tw,{BackgroundColor3=Color3.fromRGB(90,30,30)}):Play()
+	TweenService:Create(closeBtn,tw,{TextColor3=Color3.fromRGB(255,100,100)}):Play()
+end)
+closeBtn.MouseLeave:Connect(function()
+	TweenService:Create(closeBtn,tw,{BackgroundColor3=Color3.fromRGB(55,25,25)}):Play()
+	TweenService:Create(closeBtn,tw,{TextColor3=C.red}):Play()
+end)
+
+closeBtn.MouseButton1Click:Connect(function()
+	autoRollEnabled=false; autoBuyEnabled=false; autoGearEnabled=false
+	autoFertEnabled=false; autoSellEnabled=false; autoEggEnabled=false; autoCollectEnabled=false
+	local fadeOut=TweenInfo.new(0.2,Enum.EasingStyle.Quad)
+	local function fadeDescendants(parent)
+		for _,obj in ipairs(parent:GetDescendants()) do
+			if obj:IsA("Frame") or obj:IsA("ScrollingFrame") then
+				TweenService:Create(obj,fadeOut,{BackgroundTransparency=1}):Play()
+			elseif obj:IsA("TextLabel") or obj:IsA("TextButton") then
+				TweenService:Create(obj,fadeOut,{TextTransparency=1,BackgroundTransparency=1}):Play()
+			elseif obj:IsA("ImageLabel") or obj:IsA("ImageButton") then
+				TweenService:Create(obj,fadeOut,{ImageTransparency=1,BackgroundTransparency=1}):Play()
+			elseif obj:IsA("UIStroke") then
+				TweenService:Create(obj,fadeOut,{Transparency=1}):Play()
+			end
 		end
 	end
+	TweenService:Create(win,fadeOut,{BackgroundTransparency=1}):Play()
+	TweenService:Create(seedPanel,fadeOut,{BackgroundTransparency=1}):Play()
+	TweenService:Create(gearPanel,fadeOut,{BackgroundTransparency=1}):Play()
+	TweenService:Create(eggPanel,fadeOut,{BackgroundTransparency=1}):Play()
+	TweenService:Create(toastFrame,fadeOut,{BackgroundTransparency=1}):Play()
+	fadeDescendants(win); fadeDescendants(seedPanel); fadeDescendants(gearPanel)
+	fadeDescendants(eggPanel); fadeDescendants(toastFrame)
+	task.delay(0.25, function() if gui and gui.Parent then gui:Destroy() end end)
 end)
